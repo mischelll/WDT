@@ -19,7 +19,9 @@ export default class SampleComponent extends Component {
     render(){
         return (
             <div>
-                <p>{this.state.message}</p>
+                <h1>{this.state.message}</h1>
+                <h2>{this.state.body}</h2>
+                <h3>{this.state.message}</h3>
             </div>
         )
     }

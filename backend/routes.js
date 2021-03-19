@@ -7,7 +7,7 @@ router.use('/', homeController);
 router.use('/auth', authController);
 
 router.get('*', (req, res) => {
-    res.render('home/404-and-notifications');
+    res.json({message: 'error page'});
 });
 
 module.exports = router;

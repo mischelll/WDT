@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 9;
 
 const userSchema = new Schema({
-    id: monogoose.Types.ObjectId,
-
+    id: mongoose.Types.ObjectId,
+    
     username: {
         type: String,
         required: [true, 'Username is required'],

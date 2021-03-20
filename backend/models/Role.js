@@ -3,10 +3,11 @@ const Schema = mongoose.Schema;
 const Model = mongoose.model;
 
 const roleSchema = new Schema({
-    id: monogoose.Types.ObjectId,
+    id: mongoose.Types.ObjectId,
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     }
 });
 

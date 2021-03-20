@@ -2,12 +2,11 @@ const { Router } = require('express');
 const router = Router();
 
 const authService = require('../services/authService');
-const isGuest  = require('../middleware/isGuest');
+const isGuest = require('../middleware/isGuest');
 const config = require('../config/config');
 
 router.post('/login', isGuest, (req, res) => {
-    console.log(req.url);
-
+    
     authService.login(req.body)
         .then(token => {
             res.cookie(config.AUTH_COOKIE_NAME, token);
@@ -17,7 +16,7 @@ router.post('/login', isGuest, (req, res) => {
         .catch(err => {
             console.log(err);
             res.status(409);
-            res.end()
+            res.send(err);
         });
 });
 
@@ -25,15 +24,21 @@ router.post('/register', isGuest, (req, res) => {
 
     authService.register(req.body)
         .then(token => {
-            res.cookie(congig.AUTH_COOKIE_NAME, token);
+            res.cookie(config.AUTH_COOKIE_NAME, token);
             res.status(200);
             res.send({ message: 'User registered successfully', status: 200, time: Date.now() })
         })
         .catch(err => {
             console.log(err);
             res.status(409);
-            res.end()
+            res.send(err);
         });
+});
+
+router.post('/logout', (req, res) => {
+    res.clearCookie(config.AUTH_COOKIE_NAME);
+    res.status(200);
+    res.send({ message: 'Logout successfull', status: 200, time: Date.now() })
 });
 
 module.exports = router;

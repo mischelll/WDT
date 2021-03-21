@@ -11,7 +11,6 @@ module.exports = function () {
                     res.clearCookie(config.AUTH_COOKIE_NAME);
                 } else {
                     req.user = decoded;
-
                     res.locals.user = decoded;
                     res.locals.username = decoded.username;
                     res.locals.isAuthenticated = true;

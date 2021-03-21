@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 const Model = mongoose.model;
 
 const vacationDaySchema = new Schema({
-    id: monogoose.Types.ObjectId,
+    id: mongoose.Types.ObjectId,
 
-    from:{
+    from: {
         type: Date,
         required: [true, 'Vacation day: from cannot be empty!'],
 
@@ -15,12 +15,16 @@ const vacationDaySchema = new Schema({
         type: Date,
         required: [true, 'Vacation day: to cannot be empty!'],
     },
-    
+
     status: {
         type: String,
-        enum: ['approved','pending','declined'],
+        enum: ['approved', 'pending', 'declined'],
         default: 'pending'
+    },
+    user: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
     }
 });
 
-modules.exports = Model('VacationDay', vacationDaySchema);
+module.exports = Model('VacationDay', vacationDaySchema);

@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 const Model = mongoose.model;
 
 const sickDaySchema = new Schema({
-    id: monogoose.Types.ObjectId,
+    id: mongoose.Types.ObjectId,
 
-    from:{
+    from: {
         type: Date,
         required: [true, 'Sick day: from cannot be empty!'],
 
@@ -19,6 +19,10 @@ const sickDaySchema = new Schema({
     reason: {
         type: String,
         required: [true, 'Sick day: Reason must be provided!']
+    },
+    user: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
     }
 })
 

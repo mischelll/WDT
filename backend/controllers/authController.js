@@ -28,7 +28,7 @@ router.post('/register', isGuest, (req, res) => {
     authService.register(req.body)
         .then(token => {
             res.cookie(config.AUTH_COOKIE_NAME, token);
-            res.status(200);
+            res.status(201);
             res.send({ message: 'User registered successfully', status: 200, time: new Date().toISOString() })
         })
         .catch(err => {

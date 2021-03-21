@@ -47,4 +47,23 @@ router.put('/', isAuthenticated, (req, res) => {
         })
 });
 
+router.delete('/:vacaDay_id', isAuthenticated, (req, res) => {
+    const id = req.params['vacaDay_id'];
+
+    vacationDayService.deleteVacationDay(id)
+        .then(day => {
+            console.log(day);
+            res.status(200);
+            res.send(day);
+        })
+        .catch(err => {
+            res.status(409);
+            res.send({
+                error: err.message,
+                code: 409,
+                time: new Date().toISOString()
+            });
+        })
+});
+
 module.exports = router;

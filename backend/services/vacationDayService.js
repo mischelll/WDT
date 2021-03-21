@@ -17,7 +17,7 @@ const deleteVacationDay = (vacationDayId) => {
 
 
 const updateVacationDay = (vacationDayId, vacationDayData) => {
-    let {_id, from, to } = vacationDayData;
+    let { _id, from, to } = vacationDayData;
 
     if (from > to) {
         return Promise.reject(new Error('FromDate cannot be after ToDate'));

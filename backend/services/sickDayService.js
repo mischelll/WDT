@@ -15,6 +15,10 @@ const getAllSickDays = () => {
     return SickDay.find({}).lean();
 };
 
+const getSickDaysByUserId = (userId) => {
+    return SickDay.find({ user: userId }).lean();
+}
+
 const updateSickDay = (sickDayData) => {
     let { _id, from, to, reason } = sickDayData;
 
@@ -46,5 +50,6 @@ module.exports = {
     createSickDay,
     getAllSickDays,
     deleteSickDayById,
-    updateSickDay
+    updateSickDay,
+    getSickDaysByUserId
 };

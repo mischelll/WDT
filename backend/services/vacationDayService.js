@@ -1,4 +1,5 @@
 const VacationDay = require('../models/VacationDay');
+const User = require('../models/User');
 
 const dateUtil = require('../utils/dateUtil');
 
@@ -9,9 +10,22 @@ const createVacationDay = (vacationDayData, userId) => {
         return Promise.reject(new Error('FromDate cannot be after ToDate'));
     }
 
-    console.log(dateUtil.calculateNumberOfDays(from, to));
+    let workingDaysCount = dateUtil.calculateNumberOfWorkingDays(from, to);
 
-    return new VacationDay({ from, to, user: userId }).save();
+    return User.findOne({ _id: userId })
+        .then(user => {
+            if (user.annualVacationDaysAllowed < workingDaysCount) {
+                return Promise.reject(new Error('You do not have enough vacation days!'));
+            }
+
+            return Promise.all([
+                User.findOneAndUpdate({ _id: userId }, { $inc: { 'annualVacationDaysAllowed': -workingDaysCount } }).exec(),
+                new VacationDay({ from, to, user: userId }).save()
+            ]);
+        })
+        .catch(err => {
+            throw err;
+        });
 };
 
 
@@ -51,4 +65,4 @@ module.exports = {
     getAllVacationDays,
     getVacationDayByUserId,
     getVacationDayById
-}
+};

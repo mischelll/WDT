@@ -79,7 +79,7 @@ function register(userData) {
 
             throw errArray;
         });
-}
+};
 
 function login(userData) {
     let { username, password } = userData;
@@ -107,9 +107,9 @@ function login(userData) {
         .catch(err => {
             throw [{ message: err.message, status: 404 }];
         });
-}
+};
 
 module.exports = {
     register,
     login
-}
+};

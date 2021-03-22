@@ -6,7 +6,7 @@ const SALT_ROUNDS = 9;
 
 const userSchema = new Schema({
     id: mongoose.Types.ObjectId,
-    
+
     username: {
         type: String,
         required: [true, 'Username is required'],
@@ -51,17 +51,26 @@ const userSchema = new Schema({
 
     sickDays: [{
         type: mongoose.Types.ObjectId,
-        ref: 'SickDay'
+        ref: 'SickDay',
+
     }],
 
     vacationDays: [{
         type: mongoose.Types.ObjectId,
-        ref: 'VacationDay'
+        ref: 'VacationDay',
+        min: [1, 'Cannot have less than 1 vacation day per year.'],
     }],
 
     annualVacationDaysAllowed: {
         type: Number,
         required: [true, 'Annual Vacation days allowed cannot be empty!']
+    },
+
+    annualSickDaysAllowed: {
+        type: Number,
+        required: [true, 'Annual sick days allowed cannot be empty!'],
+        min: [1, 'Cannot have less than 1 sick day per year.'],
+        max: [40, 'Cannot have more than 40 sick days per year.']
     }
 })
 

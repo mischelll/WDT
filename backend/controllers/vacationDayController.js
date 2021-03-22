@@ -1,5 +1,5 @@
-const vacationDayService = require('../services/vacationDayService');
 const router = require('express').Router();
+const vacationDayService = require('../services/vacationDayService');
 
 const isAuthenticated = require('../middleware/isAuthenticated');
 

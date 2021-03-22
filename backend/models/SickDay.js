@@ -18,8 +18,10 @@ const sickDaySchema = new Schema({
 
     reason: {
         type: String,
-        required: [true, 'Sick day: Reason must be provided!']
+        required: [true, 'Sick day: Reason must be provided!'],
+        minLength: [5, 'Reason must be at least 5 characters long.']
     },
+
     user: {
         type: mongoose.Types.ObjectId,
         ref: 'User'

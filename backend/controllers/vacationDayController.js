@@ -6,7 +6,6 @@ const isAuthenticated = require('../middleware/isAuthenticated');
 router.get('/', isAuthenticated, (req, res) => {
     vacationDayService.getAllVacationDays()
         .then(days => {
-            console.log(days);
             res.status(200);
             res.send(days)
         })
@@ -23,7 +22,6 @@ router.get('/', isAuthenticated, (req, res) => {
 router.get('/user/:userId', isAuthenticated, (req, res) => {
     vacationDayService.getVacationDayByUserId(req.params['userId'])
         .then(days => {
-            console.log(days);
             res.status(200);
             res.send(days)
         })
@@ -40,7 +38,6 @@ router.get('/user/:userId', isAuthenticated, (req, res) => {
 router.get('/:vacaDayId', isAuthenticated, (req, res) => {
     vacationDayService.getVacationDayById(req.params['vacaDayId'])
         .then(days => {
-            console.log(days);
             res.status(200);
             res.send(days)
         })
@@ -60,7 +57,6 @@ router.post('/', isAuthenticated, (req, res) => {
 
     vacationDayService.createVacationDay(body, userId)
         .then(day => {
-            console.log(day);
             res.status(201);
             res.send({ message: 'Successfull creation of vacation day', status: 200, time: new Date().toISOString() })
         })
@@ -80,7 +76,6 @@ router.put('/', isAuthenticated, (req, res) => {
 
     vacationDayService.updateVacationDay(body)
         .then(day => {
-            console.log(day);
             res.status(200);
             res.send(day);
         })
@@ -99,7 +94,6 @@ router.delete('/:vacaDay_id', isAuthenticated, (req, res) => {
 
     vacationDayService.deleteVacationDay(id)
         .then(day => {
-            console.log(day);
             res.status(200);
             res.send(day);
         })

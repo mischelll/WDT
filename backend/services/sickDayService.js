@@ -10,6 +10,11 @@ const createSickDay = (sickDayData, userId) => {
     return new SickDay({ from, to, reason, user: userId }).save();
 };
 
+const getAllSickDays = () => {
+    return SickDay.find({}).lean();
+};
+
 module.exports = {
     createSickDay,
+    getAllSickDays
 };

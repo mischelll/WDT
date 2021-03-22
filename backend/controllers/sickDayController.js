@@ -49,7 +49,23 @@ router.delete('/:sickDayId', isAuthenticated, (req, res) => {
                 code: 409,
                 time: new Date().toISOString()
             });
+        });
+});
+
+router.put('/', isAuthenticated, (req, res) => {
+    sickDayService.updateSickDay(req.body)
+        .then(sickDay => {
+            res.status(200);
+            res.send(sickDay)
         })
+        .catch(err => {
+            res.status(409);
+            res.send({
+                error: err.message,
+                code: 409,
+                time: new Date().toISOString()
+            });
+        });
 })
 
 module.exports = router;

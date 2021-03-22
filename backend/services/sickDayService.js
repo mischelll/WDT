@@ -14,7 +14,23 @@ const getAllSickDays = () => {
     return SickDay.find({}).lean();
 };
 
+const deleteSickDayById = (sickDayId, userId) => {
+   return SickDay.findOne()
+    .and([{ _id: sickDayId }, { user: userId }])
+    .exec()
+    .then(sickDay => {
+       
+        if(sickDay){
+            return SickDay.deleteOne({ _id: sickDayId });
+        }
+
+        return Promise.reject(new Error('Forbidden'));
+    });
+    
+};
+
 module.exports = {
     createSickDay,
-    getAllSickDays
+    getAllSickDays,
+    deleteSickDayById
 };

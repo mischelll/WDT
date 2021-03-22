@@ -40,7 +40,7 @@ router.post('/', isAuthenticated, (req, res) => {
     sickDayService.createSickDay(req.body, req.user._id)
         .then(sickDay => {
             res.status(201);
-            res.send(sickDay)
+            res.send(sickDay[1])
         })
         .catch(err => {
             res.status(409);

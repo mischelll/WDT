@@ -1,14 +1,32 @@
 const SickDay = require('../models/SickDay');
-const VacationDay = require('../models/VacationDay');
+const User = require('../models/User');
+
+const dateUtil = require('../utils/dateUtil');
 
 const createSickDay = (sickDayData, userId) => {
+
     let { from, to, reason } = sickDayData;
 
     if (from > to) {
         return Promise.reject(new Error('From Date cannot be after To Date'));
     }
 
-    return new SickDay({ from, to, reason, user: userId }).save();
+    let workingDaysCount = dateUtil.calculateNumberOfWorkingDays(from, to);
+
+    return User.findOne({ _id: userId })
+        .then(user => {
+            if (user.annualSickDaysAllowed < workingDaysCount) {
+                return Promise.reject(new Error('You do not have enough sick days!'));
+            }
+
+            return Promise.all([
+                User.findOneAndUpdate({ _id: userId }, { $inc: { 'annualSickDaysAllowed': -workingDaysCount } }).exec(),
+                new SickDay({ from, to, reason, user: userId }).save()
+            ]);
+        })
+        .catch(err => {
+            throw err;
+        });
 };
 
 const getAllSickDays = () => {

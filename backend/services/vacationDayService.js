@@ -4,6 +4,7 @@ const User = require('../models/User');
 const dateUtil = require('../utils/dateUtil');
 
 const createVacationDay = (vacationDayData, userId) => {
+    
     let { from, to } = vacationDayData;
 
     if (from > to) {

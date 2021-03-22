@@ -7,9 +7,9 @@ const { SECRET } = require('../config/config');
 
 function register(userData) {
 
-    let { username, password, repeatPassword, annualVacationDaysAllowed, email } = userData;
+    let { username, password, repeatPassword, annualVacationDaysAllowed, annualSickDaysAllowed, email } = userData;
 
-    return User.findOne({ username: username })
+    return User.findOne().or([{ username: username}, {email: email }] )
         .exec()
         .then(user => {
             if (password !== repeatPassword) {
@@ -24,7 +24,7 @@ function register(userData) {
                 });
             }
 
-            if (user) {
+            if (user && user.username === username) {
                 return Promise.reject({
                     errors: {
                         username: {
@@ -36,11 +36,24 @@ function register(userData) {
                 });
             }
 
+            if (user && user.email === email) {
+                return Promise.reject({
+                    errors: {
+                        email: {
+                            properties: {
+                                message: "Email must be unique"
+                            }
+                        }
+                    }
+                });
+            }
+
             let createdUser = new User({
                 username,
                 password,
                 email,
                 annualVacationDaysAllowed,
+                annualSickDaysAllowed
             });
 
 

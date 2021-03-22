@@ -14,9 +14,9 @@ const userSchema = new Schema({
         minLength: [4, 'Username must be at least 4 characters'],
         validate: {
             validator: (v) => {
-                return /^[a-zA-z]+[0-9]*$/.test(v);
+                return /^[a-zA-z0-9]+$/.test(v);
             },
-            message: () => `Username must contain only english letters and digits!`
+            message: () => `Username must contain only english letters and digits (including '_')!`
         }
     },
 

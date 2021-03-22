@@ -4,7 +4,54 @@ const router = require('express').Router();
 const isAuthenticated = require('../middleware/isAuthenticated');
 
 router.get('/', isAuthenticated, (req, res) => {
-    res.send('All vacay days');
+    vacationDayService.getAllVacationDays()
+        .then(days => {
+            console.log(days);
+            res.status(200);
+            res.send(days)
+        })
+        .catch(err => {
+            res.status(404);
+            res.send({
+                error: err.message,
+                code: 404,
+                time: new Date().toISOString()
+            });
+        });
+});
+
+router.get('/user/:userId', isAuthenticated, (req, res) => {
+    vacationDayService.getVacationDayByUserId(req.params['userId'])
+        .then(days => {
+            console.log(days);
+            res.status(200);
+            res.send(days)
+        })
+        .catch(err => {
+            res.status(404);
+            res.send({
+                error: err.message,
+                code: 404,
+                time: new Date().toISOString()
+            });
+        });
+});
+
+router.get('/:vacaDayId', isAuthenticated, (req, res) => {
+    vacationDayService.getVacationDayById(req.params['vacaDayId'])
+        .then(days => {
+            console.log(days);
+            res.status(200);
+            res.send(days)
+        })
+        .catch(err => {
+            res.status(404);
+            res.send({
+                error: err.message,
+                code: 404,
+                time: new Date().toISOString()
+            });
+        });
 });
 
 router.post('/', isAuthenticated, (req, res) => {
@@ -31,7 +78,7 @@ router.put('/', isAuthenticated, (req, res) => {
     // 60575ff13c44a92bc8b0e4dd
     const body = req.body;
 
-    vacationDayService.updateVacationDay('60575ff13c44a92bc8b0e4dd', body)
+    vacationDayService.updateVacationDay(body)
         .then(day => {
             console.log(day);
             res.status(200);

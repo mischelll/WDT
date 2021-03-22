@@ -16,7 +16,7 @@ const deleteVacationDay = (vacationDayId) => {
 };
 
 
-const updateVacationDay = (vacationDayId, vacationDayData) => {
+const updateVacationDay = (vacationDayData) => {
     let { _id, from, to } = vacationDayData;
 
     if (from > to) {
@@ -29,13 +29,23 @@ const updateVacationDay = (vacationDayId, vacationDayData) => {
 
 };
 
-const getAllVacationDAys = () => {
+const getAllVacationDays = () => {
+    return VacationDay.find({}).lean();
+};
 
+const getVacationDayByUserId = (userId) => {
+    return VacationDay.find({ user: userId }).lean();
+};
+
+const getVacationDayById = (vacationDayId) => {
+    return VacationDay.findOne({ _id: vacationDayId }).lean();
 };
 
 module.exports = {
     createVacationDay,
     deleteVacationDay,
     updateVacationDay,
-    getAllVacationDAys
+    getAllVacationDays,
+    getVacationDayByUserId,
+    getVacationDayById
 }

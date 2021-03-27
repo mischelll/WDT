@@ -12,9 +12,9 @@ router.post('/login', isGuest, (req, res) => {
 
     authService.login(req.body)
         .then(token => {
-            res.cookie(config.AUTH_COOKIE_NAME, token);
+            res.setHeader(config.AUTH_HEADER_NAME,'Bearer ' + token)
             res.status(200);
-            res.send({ message: 'Successfull sign in', status: 200, time: new Date().toISOString() })
+            res.send({"id_token":token})
         })
         .catch(err => {
             console.log(err);
@@ -27,9 +27,9 @@ router.post('/register', isGuest, (req, res) => {
 
     authService.register(req.body)
         .then(token => {
-            res.cookie(config.AUTH_COOKIE_NAME, token);
+            res.setHeader(config.AUTH_HEADER_NAME,'Bearer ' + token)
             res.status(201);
-            res.send({ message: 'User registered successfully', status: 200, time: new Date().toISOString() })
+            res.send({"id_token":token})
         })
         .catch(err => {
             console.log(err);

@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken-promisified');
 const { SECRET } = require('../config/config');
 
 function register(userData) {
+    console.log(userData);
 
     let { username, password, repeatPassword, annualVacationDaysAllowed, annualSickDaysAllowed, email } = userData;
 

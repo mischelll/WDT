@@ -10,7 +10,7 @@ import SampleComponent from './components/SampleComponent';
 function App() {
   return (
     <div className="App">
-      <Header />
+      <Header loggedIn={false}/>
       <Switch>
         <Route path='/home' exact component={SampleComponent} />
         <Route path='/auth/register' exact component={SampleComponent} />

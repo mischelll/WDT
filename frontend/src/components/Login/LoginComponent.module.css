@@ -9,7 +9,7 @@
 }
 
 
-.form{
+form{
   background:#fff;
   padding:30px 34px;
   margin:24px 0 0;
@@ -94,4 +94,9 @@ input[type="checkbox"]{
 }
 a{
   text-decoration:none;
+}
+.error{
+  color: red;
+  text-align: center;
+  border: none;
 }

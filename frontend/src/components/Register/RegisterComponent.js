@@ -1,29 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form"
 import style from './RegisterComponent.module.css';
+import { register } from '../../service/authService';
 
 export default function RegisterComponent() {
 
+    const [userData, setUserData] = useState([]);
     const { register, handleSubmit, errors } = useForm();
 
     const onSubmit = data => {
         console.log(data);
-       
-        fetch('http://localhost:8080/api/auth/register', {
-            method:"POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-            .then(res => res.json())
-            .then(dt => {
-                console.log(data);
-            })
-            .catch(err => console.log(err.message));
+
+        setUserData(register(data));
     }
 
     return (
         <div className={style.component}>
-            <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={style.inputField}>
                     <label for="username">Username</label>
                     <input

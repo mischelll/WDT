@@ -10,9 +10,12 @@
 
 
 form{
-  background:#fff;
+  background:rgba(37, 146, 209, 0.034);
+  color: aliceblue;
   padding:30px 34px;
-  margin:24px 0 0;
+  margin:auto;
+  margin-top: 50px;
+  height: 50%;
   min-width:400px;
   min-height:273px;
   border-radius:5px;
@@ -33,7 +36,7 @@ input[type="email"],input[type="password"], input[type="number"], input[type="te
   padding:15px;
   border-radius:5px;
   border:1px solid transparent;
-  background:hsl(210, 38%, 95%);
+  background:hsl(210, 33%, 65%);
   line-height: 24px;
   outline:none;
 }

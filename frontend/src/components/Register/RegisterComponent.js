@@ -28,7 +28,7 @@ export default function RegisterComponent() {
                             required: "Username is required",
                             minLength: { value: 8, message: "Username must be at least 8 characters" }
                         })} />
-                    {errors.username && <p>{errors.username.message}</p>}
+                    {errors.username && <p className={style.error}>{errors.username.message}</p>}
 
                 </div>
                 <div className={style.inputField}>

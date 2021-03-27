@@ -6,13 +6,17 @@ import Header from './components/Header'
 import LoginComponent from './components/Login/LoginComponent';
 import RegisterComponent from './components/Register';
 import SampleComponent from './components/SampleComponent';
+import SickDayComponent from './components/SickDay';
+import VacationDay from './components/VacationDay';
 
 function App() {
   return (
     <div className="App">
-      <Header loggedIn={true}/>
+      <Header loggedIn={false} />
       <Switch>
         <Route path='/home' exact component={SampleComponent} />
+        <Route path='/sickDays' exact component={SickDayComponent} />
+        <Route path='/vacationDays' exact component={VacationDay} />
         <Route path='/auth/register' exact component={SampleComponent} />
         <Route path='/auth/login' exact component={SampleComponent} />
         <Route path='/about' exact component={About} />

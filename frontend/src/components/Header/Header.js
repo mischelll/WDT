@@ -2,8 +2,33 @@ import style from './Header.module.css';
 import { Link } from 'react-router-dom'
 
 export default function Header({ loggedIn }) {
+    if(loggedIn){
+        return (
+            <div className={style.nav}>
+                <ul>
+                    <Link to="/home">
+                        <li><a href="/" className={style.navLink}>Home</a></li>
+                    </Link>
+                    <Link to="/vacationDays">
+                        <li><a href="/" className={style.navLink}>Vacation Days</a></li>
+                    </Link>
+                    <Link to="/sickDays">
+                        <li><a href="/" className={style.navLink}>Sick Days</a></li>
+                    </Link>
+                    <Link to="/about">
+                        <li><a href="/about" className={style.navLink}>About</a></li>
+                    </Link>
+                    <Link to="/logout">
+                        <li><a href="/logout" className={style.navLink}>Logout</a></li>
+                    </Link>
+                    
+                </ul>
+            </div>
+        )
+    }
     return (
         <div className={style.nav}>
+        
             <ul>
                 <Link to="/home">
                     <li><a href="/" className={style.navLink}>Home</a></li>
@@ -17,6 +42,7 @@ export default function Header({ loggedIn }) {
                 <Link to="/about">
                     <li><a href="/about" className={style.navLink}><em>About</em></a></li>
                 </Link>
+                
             </ul>
         </div>
     )

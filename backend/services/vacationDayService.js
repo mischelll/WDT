@@ -20,7 +20,6 @@ const createVacationDay = (vacationDayData, userId) => {
             }
 
             return Promise.all([
-                User.findOneAndUpdate({ _id: userId }, { $inc: { 'annualVacationDaysAllowed': -workingDaysCount } }).exec(),
                 new VacationDay({ from, to, user: userId }).save()
             ]);
         })

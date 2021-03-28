@@ -39,7 +39,7 @@ router.post('/register', isGuest, (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-    res.clearCookie(config.AUTH_COOKIE_NAME);
+    res.removeHeader(config.AUTH_HEADER_NAME);
     res.status(200);
     res.send({ message: 'Logout successfull', status: 200, time: new Date().toISOString() })
 });

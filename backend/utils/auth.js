@@ -15,6 +15,7 @@ module.exports = function () {
                     res.locals.user = decoded;
                     res.locals.username = decoded.username;
                     res.locals.isAuthenticated = true;
+                   
                 }
             });
         }

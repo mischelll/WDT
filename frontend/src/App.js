@@ -4,6 +4,7 @@ import { About } from './components/About/About';
 import { Footer } from './components/Footer/Footer';
 import Header from './components/Header'
 import LoginComponent from './components/Login/LoginComponent';
+import ProfileComponent from './components/Profile/ProfileComponent';
 import RegisterComponent from './components/Register';
 import SampleComponent from './components/SampleComponent';
 import SickDayComponent from './components/SickDay';
@@ -12,11 +13,12 @@ import VacationDay from './components/VacationDay';
 function App() {
   return (
     <div className="App">
-      <Header loggedIn={false} />
+      <Header loggedIn={true} username={"gosho"} />
       <Switch>
         <Route path='/home' exact component={SampleComponent} />
         <Route path='/sickDays' exact component={SickDayComponent} />
         <Route path='/vacationDays' exact component={VacationDay} />
+        <Route path='/user/profile/someUser' exact component={ProfileComponent} />
         <Route path='/auth/register' exact component={SampleComponent} />
         <Route path='/auth/login' exact component={SampleComponent} />
         <Route path='/about' exact component={About} />

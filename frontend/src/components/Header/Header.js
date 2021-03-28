@@ -1,8 +1,8 @@
 import style from './Header.module.css';
 import { Link } from 'react-router-dom'
 
-export default function Header({ loggedIn }) {
-    if(loggedIn){
+export default function Header({ loggedIn, username }) {
+    if (loggedIn) {
         return (
             <div className={style.nav}>
                 <ul>
@@ -18,17 +18,20 @@ export default function Header({ loggedIn }) {
                     <Link to="/about">
                         <li><a href="/about" className={style.navLink}>About</a></li>
                     </Link>
+                    <Link to="/user/profile/someUser">
+                        <li className={style.navSide}><a href="/" className={style.navLink}>{"Hello, " + username}</a></li>
+                    </Link>
                     <Link to="/logout">
                         <li><a href="/logout" className={style.navLink}>Logout</a></li>
                     </Link>
-                    
+
                 </ul>
             </div>
         )
     }
     return (
         <div className={style.nav}>
-        
+
             <ul>
                 <Link to="/home">
                     <li><a href="/" className={style.navLink}>Home</a></li>
@@ -37,12 +40,12 @@ export default function Header({ loggedIn }) {
                     <li><a href="/" className={style.navLink}>Sign up</a></li>
                 </Link>
                 <Link to="/login">
-                    <li><a href="/" className={style.navLink}>{loggedIn ? "Logout" : "Sign in"}</a></li>
+                    <li><a href="/" className={style.navLink}>Sign in</a></li>
                 </Link>
                 <Link to="/about">
                     <li><a href="/about" className={style.navLink}><em>About</em></a></li>
                 </Link>
-                
+
             </ul>
         </div>
     )

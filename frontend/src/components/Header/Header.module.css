@@ -24,6 +24,10 @@ html, body, div, p, ul, li {
     line-height: 60px; /* should be the same as height */
     padding: 0 40px; /* "0" sets top and bottom padding to none */
   }
+
+  .navSide{
+    text-align: right;
+  }
   
   /* :hover allows you change the background color of the nav items when you mouse over them. Play around with the transition value to change the speed of the hover transition. */
   .nav li:hover {

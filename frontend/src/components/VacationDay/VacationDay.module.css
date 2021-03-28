@@ -7,7 +7,7 @@
 }
 
 .requestVacaDaysButton {
-    background-color: #4b79be; /* Green */
+  background-color: #4b79be; /* Green */
   border: none;
   color: white;
   margin-top: 20px;
@@ -20,6 +20,7 @@
 .requestVacaDaysButton:hover{
     background-color: #2e599b;
     font-size: 17px;
+    cursor:pointer;
 }
 
 table {

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 export default function VacationDay() {
     const [vacationDays, setVacationDays] = useState([]);
+    const[revenue, setRevenue] = useState();
 
     useEffect(() => {
         fetch('http://localhost:8080/api/vacationDay', {
@@ -13,9 +14,10 @@ export default function VacationDay() {
             .then((data) => {
                 console.log(data);
                 setVacationDays(data);
-                console.log(vacationDays);
+                
             })
             .catch(err => console.log(err.message));
+           
     }, [setVacationDays]);
 
     return (
@@ -34,35 +36,21 @@ export default function VacationDay() {
                 <tbody>
                     {vacationDays.map(x =>
                         <tr key={x._id}>
-                            <td>{x.from}</td>
-                            <td>{x.to}</td>
+                            <td>{x.from.substring(0,10)}</td>
+                            <td>{x.to.substring(0,10)}</td>
                             <td>4</td>
                             <td>395 $</td>
                             <td>{x.status}</td>
                         </tr>
                     )}
-                    <tr>
-                        <td>20.02.2021</td>
-                        <td>23.02.2021</td>
-                        <td>4</td>
-                        <td>395 $</td>
-                        <td>Accepted</td>
-                    </tr>
-                    <tr>
-                        <td>20.02.2021</td>
-                        <td>22.02.2021</td>
-                        <td>3</td>
-                        <td>295 $</td>
-                        <td>Pending</td>
-                    </tr>
-                    <tr>
-                        <td>20.02.2021</td>
-                        <td>21.02.2021</td>
-                        <td>2</td>
-                        <td>195 $</td>
-                        <td>Declined</td>
-                    </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Hello</td>
+                        <td>Hello</td>
+                        <td>Hello</td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     )

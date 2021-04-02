@@ -1,7 +1,15 @@
 import style from './Header.module.css';
 import { Link } from 'react-router-dom'
+import { useHistory,  } from 'react-router-dom';
 
 export default function Header({ loggedIn, username }) {
+    const history = useHistory();
+
+    function handleLogout () {
+        history.push('/auth/login');
+        console.log(history);
+    }
+
     if (loggedIn) {
         return (
             <div className={style.nav}>
@@ -19,10 +27,10 @@ export default function Header({ loggedIn, username }) {
                         <li><a href="/about" className={style.navLink}>About</a></li>
                     </Link>
                     <Link to="/user/profile/someUser">
-                        <li className={style.navSide}><a href="/" className={style.navLink}>{"Hello, " + username}</a></li>
+                        <li className={style.navSide}><a className={style.navLink}>{"Hello, " + username}</a></li>
                     </Link>
-                    <Link to="/logout">
-                        <li><a href="/logout" className={style.navLink}>Logout</a></li>
+                    <Link to="/logout" onClick={handleLogout}>
+                        <li><a  className={style.navLink}>Logout</a></li>
                     </Link>
 
                 </ul>

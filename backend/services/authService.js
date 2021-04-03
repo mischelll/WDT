@@ -106,7 +106,7 @@ function login(userData) {
             return jwt.sign({ _id: user._id, username: user.username, email: user.email, roles: roles }, SECRET, { expiresIn: '24h' });
         })
         .catch(err => {
-            throw [{ message: err.message, status: 404 }];
+            throw [{ message: err.message, status: 401 }];
         });
 };
 

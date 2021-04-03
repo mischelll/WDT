@@ -7,7 +7,7 @@ router.get('/info', isAuthenticated, (req, res) => {
         .then(userInfo => {
             console.log(userInfo);
             res.status(200);
-            res.send({ userInfo: userInfo })
+            res.send({ userInfo })
         })
         .catch(err => {
             res.status(404);

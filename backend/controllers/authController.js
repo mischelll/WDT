@@ -18,8 +18,8 @@ router.post('/login', isGuest, (req, res) => {
         })
         .catch(err => {
             console.log(err);
-            res.status(409);
-            res.send(err);
+            res.status(401);
+            res.send(err[0]);
         });
 });
 

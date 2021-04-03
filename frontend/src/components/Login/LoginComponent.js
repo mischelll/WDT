@@ -1,17 +1,19 @@
 import style from './LoginComponent.module.css'
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useHistory,  } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { login, getAdmin } from '../../service/authService';
+import {UserContext} from '../../contexts/UserContext';
 
 export default function LoginComponent() {
 
   const { register, handleSubmit, errors } = useForm();
-  const [userData, setUserData] = useState([]);
+  const context = useContext(UserContext);
+  const history = useHistory();
 
   const onSubmit = data => {
-    login(data);
-    console.log(getAdmin());
-
+    context.login(data)
+    history.push('/home')
   }
 
   return (
@@ -25,7 +27,8 @@ export default function LoginComponent() {
             id="username"
             name="username"
             ref={register({
-              required: "Username is required"
+              required: "Username is required",
+              minLength: { value: 2, message: "Username must be at least 2 symbols." }
             })} />
           {errors.username && <p className={style.error}>{errors.username.message}</p>}
         </div>

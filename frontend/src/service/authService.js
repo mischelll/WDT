@@ -33,8 +33,7 @@ export const login = (loginData) => {
         .then(token => {
             console.log(token);
             sessionStorage.setItem("AUTH_TOKEN_KEY", token.id_token);
-
-
+            return token;
         })
         .catch(err => console.log(err.message));
 }
@@ -44,8 +43,27 @@ export const getAdmin = () => {
 
     return fetch(adminUrl, {
         method: "GET",
-        headers: { 'Authorization' : "Bearer " + sessionStorage.getItem("AUTH_TOKEN_KEY") },
+        headers: { 'Authorization': "Bearer " + sessionStorage.getItem("AUTH_TOKEN_KEY") },
     })
-    .then(res => res.json())
-    .catch(err => console.log(err.message));
+        .then(res => res.json())
+        .catch(err => console.log(err.message));
+}
+
+export const getUserInfo = () => {
+    fetch('http://localhost:8080/api/user/info', {
+        method: "GET",
+        headers: { 'Authorization': "Bearer " + sessionStorage.getItem("AUTH_TOKEN_KEY") },
+    })
+        .then(res => res.json())
+        .then(info => {
+            console.log(info);
+            return info
+        })
+        .catch(err => {
+            console.log(err.message);
+        });
+}
+
+export const logout = () => {
+    sessionStorage.clear()
 }

@@ -1,36 +1,46 @@
-import React, {createContext, Component} from 'react';
-import {login} from '../service/authService'
+import React, { createContext, Component } from 'react';
+import { login, logout } from '../service/authService'
+import { getUserInfo } from '../service/authService';
 
 export const UserContext = createContext();
 
 export default class UserContextProvider extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             isAuthenticated: false,
-            username: 'gosho',
-            currentUser : {}
+            currentUser: {}
+        }
+
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+    }
+
+    componentDidMount() {
+        if (sessionStorage.getItem("AUTH_TOKEN_KEY")) {
+            this.setState({ currentUser: getUserInfo(), isAuthenticated: true })
+            console.log(this.state.currentUser);
         }
     }
 
-    componentDidMount(){
-       if(!this.state.isAuthenticated){
-           fetch('http://localhost:8080/api/user/info')
-           .then(res => res.json())
-           .then(info => {
-               this.setState({currentUser: info.userInfo})
-           })
-           .catch(err => {
-               console.log(err.message);
-           })
-       }
+    handleLogoutClick() {
+        logout();
+        this.setState({ isAuthenticated: false, currentUser: {} })
     }
 
-    function 
+    handleLoginClick(data) {
+        login(data).then(token => {
+            if(token.id_token){
+                this.setState({ isAuthenticated: true, currentUser: getUserInfo() });
+                
+            }
+        });
 
-    render(){
-        return(
-            <UserContext.Provider value={{...this.state}} >
+    }
+
+    render() {
+        return (
+            <UserContext.Provider value={{ ...this.state, logout: this.handleLogoutClick, login: this.handleLoginClick }} >
                 {this.props.children}
             </UserContext.Provider>
         )

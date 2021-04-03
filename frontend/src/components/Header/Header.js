@@ -1,19 +1,24 @@
 import style from './Header.module.css';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { useHistory,  } from 'react-router-dom';
 import { useContext } from 'react';
 import {UserContext} from '../../contexts/UserContext';
+import {logout} from '../../service/authService';
 
 export default function Header({ loggedIn, username }) {
     const history = useHistory();
-    const context = useContext(UserContext)
+    const {logout, isAuthenticated} = useContext(UserContext);
 
     function handleLogout () {
-        history.push('/auth/login');
-        console.log(history);
+       
+        
+        logout();
+        history.push('/login')
+        console.log('e');
+        return <Redirect to='/login'/>
     }
 
-    if (context.isAuthenticated) {
+    if (isAuthenticated) {
         return (
             <div className={style.nav}>
                 <ul>
@@ -30,7 +35,7 @@ export default function Header({ loggedIn, username }) {
                         <li><a href="/about" className={style.navLink}>About</a></li>
                     </Link>
                     <Link to="/user/profile/someUser">
-                        <li className={style.navSide}><a href="/" className={style.navLink}>{"Hello, " + context.username}</a></li>
+                        <li className={style.navSide}><a href="/" className={style.navLink}>{"Hello, " + username}</a></li>
                     </Link>
                     <Link to="/logout" onClick={handleLogout}>
                         <li><a href="/" className={style.navLink}>Logout</a></li>

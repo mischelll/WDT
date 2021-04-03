@@ -8,14 +8,19 @@ module.exports = function () {
         if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
             const jwtToken = bearerToken.slice(7, bearerToken.length);
             jwt.verify(jwtToken, config.SECRET, function (err, decoded) {
-                if (err) {
-                    res.clearHeader('Authorization');
-                } else {
-                    req.user = decoded;
-                    res.locals.user = decoded;
-                    res.locals.username = decoded.username;
-                    res.locals.isAuthenticated = true;
-                   
+                try {
+                    if (err) {
+                        res.status(403);
+                        throw Error(err.message)
+                    } else {
+                        req.user = decoded;
+                        res.locals.user = decoded;
+                        res.locals.username = decoded.username;
+                        res.locals.isAuthenticated = true;
+
+                    }
+                } catch (err) {
+                    console.warn(err.message)
                 }
             });
         }

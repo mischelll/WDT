@@ -6,7 +6,7 @@ import Header from './components/Header'
 import LoginComponent from './components/Login/LoginComponent';
 import ProfileComponent from './components/Profile/ProfileComponent';
 import RegisterComponent from './components/Register';
-import SampleComponent from './components/SampleComponent';
+import SampleComponent from './components/Home/SampleComponent';
 import SickDayComponent from './components/SickDay';
 import VacationDay from './components/VacationDay';
 import UserContextProvider from './contexts/UserContext';

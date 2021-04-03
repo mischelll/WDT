@@ -1,7 +1,7 @@
 const baseUrl = 'http://localhost:8080';
 
 export const getMessage = () => {
-    let messageUrl = baseUrl + '/home';
+    let messageUrl = baseUrl + '/api/home';
 
     return fetch(messageUrl)
         .then(res => res.json())

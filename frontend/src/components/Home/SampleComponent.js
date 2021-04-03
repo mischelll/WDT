@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import * as sampleService from '../service/sampleService';
+import * as sampleService from '../../service/sampleService';
 
 export default class SampleComponent extends Component { 
     constructor(props){

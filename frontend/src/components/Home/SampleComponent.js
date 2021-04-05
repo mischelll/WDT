@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import * as sampleService from '../../service/sampleService';
+import style from './HomePage.module.css';
 
 export default class SampleComponent extends Component { 
     constructor(props){
@@ -18,7 +19,7 @@ export default class SampleComponent extends Component {
 
     render(){
         return (
-            <div>
+            <div className={style.container}>
                 <h1>{this.state.message}</h1>
                 <h2>{this.state.body}</h2>
                 <h3>{this.state.message}</h3>

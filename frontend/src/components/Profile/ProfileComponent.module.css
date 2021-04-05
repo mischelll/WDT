@@ -1,0 +1,25 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+  }
+
+.card{
+    color: aliceblue;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.label{
+    font-family:'Times New Roman', Times, serif;
+    font-size: larger;
+    display:block;
+    margin-bottom: 5px;
+    margin-top:5px;
+}
+
+.inputField{
+    background-color: rgb(46, 54, 126);
+    margin-bottom:15px;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: larger;
+  }

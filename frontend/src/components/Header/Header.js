@@ -7,14 +7,12 @@ import {logout} from '../../service/authService';
 
 export default function Header({ loggedIn, username }) {
     const history = useHistory();
-    const {logout, isAuthenticated} = useContext(UserContext);
+    const {logout, isAuthenticated, currentUser} = useContext(UserContext);
 
     function handleLogout () {
-       
-        
+        console.log(currentUser);
         logout();
         history.push('/login')
-        console.log('e');
         return <Redirect to='/login'/>
     }
 
@@ -31,11 +29,11 @@ export default function Header({ loggedIn, username }) {
                     <Link to="/sickDays">
                         <li><a href="/" className={style.navLink}>Sick Days</a></li>
                     </Link>
+                    <Link to={`/user/profile/${currentUser.username}`}>
+                        <li className={style.navSide}><a href="/" className={style.navLink}>{"Hello, " + currentUser.username}</a></li>
+                    </Link>
                     <Link to="/about">
                         <li><a href="/about" className={style.navLink}>About</a></li>
-                    </Link>
-                    <Link to="/user/profile/someUser">
-                        <li className={style.navSide}><a href="/" className={style.navLink}>{"Hello, " + username}</a></li>
                     </Link>
                     <Link to="/logout" onClick={handleLogout}>
                         <li><a href="/" className={style.navLink}>Logout</a></li>

@@ -52,7 +52,7 @@ export default function RegisterComponent() {
                     <input type="number" min="0" placeholder="0" id="annualSickDaysAllowed" name="annualSickDaysAllowed" ref={register} />
                 </div>
                 <div className={style.action}>
-                    <a href="/">Already a member? <span>Sign in</span></a>
+                    <a href="/login">Already a member? <span>Sign in</span></a>
                     <button id="btn" className={style.btn}>Sign up</button>
                 </div>
             </form>

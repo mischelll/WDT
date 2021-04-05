@@ -50,15 +50,11 @@ export const getAdmin = () => {
 }
 
 export const getUserInfo = () => {
-    fetch('http://localhost:8080/api/user/info', {
+   return fetch('http://localhost:8080/api/user/info', {
         method: "GET",
         headers: { 'Authorization': "Bearer " + sessionStorage.getItem("AUTH_TOKEN_KEY") },
     })
         .then(res => res.json())
-        .then(info => {
-            console.log(info);
-            return info
-        })
         .catch(err => {
             console.log(err.message);
         });

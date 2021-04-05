@@ -1,6 +1,5 @@
 import React, { createContext, Component } from 'react';
-import { login, logout } from '../service/authService'
-import { getUserInfo } from '../service/authService';
+import { login, logout, getUserInfo } from '../service/authService'
 
 export const UserContext = createContext();
 
@@ -9,6 +8,7 @@ export default class UserContextProvider extends Component {
         super(props)
         this.state = {
             isAuthenticated: false,
+            isAdmin: false,
             currentUser: {}
         }
 
@@ -18,8 +18,11 @@ export default class UserContextProvider extends Component {
 
     componentDidMount() {
         if (sessionStorage.getItem("AUTH_TOKEN_KEY")) {
-            this.setState({ currentUser: getUserInfo(), isAuthenticated: true })
-            console.log(this.state.currentUser);
+            Promise.resolve(getUserInfo())
+                .then(data => {
+                    let {userInfo} = data
+                    this.setState({ isAuthenticated: true, currentUser: userInfo });
+                })
         }
     }
 
@@ -30,9 +33,12 @@ export default class UserContextProvider extends Component {
 
     handleLoginClick(data) {
         login(data).then(token => {
-            if(token.id_token){
-                this.setState({ isAuthenticated: true, currentUser: getUserInfo() });
-                
+            if (token.id_token) {
+                Promise.resolve(getUserInfo())
+                    .then(data => {
+                        let {userInfo} = data
+                        this.setState({ isAuthenticated: true, currentUser: userInfo });
+                    })
             }
         });
 

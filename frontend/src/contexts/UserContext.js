@@ -17,12 +17,16 @@ export default class UserContextProvider extends Component {
     }
 
     componentDidMount() {
-        if (sessionStorage.getItem("AUTH_TOKEN_KEY")) {
+        const token = sessionStorage.getItem("AUTH_TOKEN_KEY");
+        console.log(typeof token);
+        if (token !== 'undefined' && token !== null) {
             Promise.resolve(getUserInfo())
                 .then(data => {
+                    console.log('ded');
                     let {userInfo} = data
                     this.setState({ isAuthenticated: true, currentUser: userInfo });
                 })
+                .catch(err => console.log(err.message))
         }
     }
 
@@ -39,7 +43,9 @@ export default class UserContextProvider extends Component {
                         let {userInfo} = data
                         this.setState({ isAuthenticated: true, currentUser: userInfo });
                     })
+                    .catch(err => console.log(err.message))
             }
+            
         });
 
     }

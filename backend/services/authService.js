@@ -10,43 +10,25 @@ function register(userData) {
 
     let { username, password, repeatPassword, annualVacationDaysAllowed, annualSickDaysAllowed, email } = userData;
 
-    return User.findOne().or([{ username: username}, {email: email }] )
+    return User.findOne().or([{ username: username }, { email: email }])
         .exec()
         .then(user => {
+            let errorMessages = [];
+            console.log(user);
             if (password !== repeatPassword) {
-                return Promise.reject({
-                    errors: {
-                        password: {
-                            properties: {
-                                message: "Password mismatch"
-                            }
-                        }
-                    }
-                });
+                errorMessages.push({ errorMessage: "Password mismatch!" })
             }
 
             if (user && user.username === username) {
-                return Promise.reject({
-                    errors: {
-                        username: {
-                            properties: {
-                                message: "Username must be unique"
-                            }
-                        }
-                    }
-                });
+                errorMessages.push({ errorMessage: "Username should be unique" })
             }
 
             if (user && user.email === email) {
-                return Promise.reject({
-                    errors: {
-                        email: {
-                            properties: {
-                                message: "Email must be unique"
-                            }
-                        }
-                    }
-                });
+                errorMessages.push({ errorMessage: "Email should be unique" })
+            }
+
+            if (errorMessages.length > 0) {
+                return Promise.reject(errorMessages);
             }
 
             let createdUser = new User({
@@ -66,19 +48,12 @@ function register(userData) {
             return createdUser.save();
         })
         .then(registeredUser => {
-
-            let roles = [];
-            roles.push(registeredUser.roles[0])
-
-            return jwt.sign({ _id: registeredUser._id, username: registeredUser.username, email: registeredUser.email, roles: roles }, SECRET, { expiresIn: '24h' });
+            return registeredUser;
         })
         .catch((error) => {
             console.log(error);
-            let errArray = [];
-            Object.keys(error.errors).map(x => errArray.push({ message: error.errors[x].properties.message }));
-            console.log(errArray);
 
-            throw errArray;
+            throw error;
         });
 };
 

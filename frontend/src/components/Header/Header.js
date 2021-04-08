@@ -1,19 +1,17 @@
 import style from './Header.module.css';
 import { Link, Redirect } from 'react-router-dom'
-import { useHistory,  } from 'react-router-dom';
+import { useHistory, } from 'react-router-dom';
 import { useContext } from 'react';
-import {UserContext} from '../../contexts/UserContext';
-import {logout} from '../../service/authService';
+import { UserContext } from '../../contexts/UserContext';
+import { logout } from '../../service/authService';
 
 export default function Header({ loggedIn, username }) {
     const history = useHistory();
-    const {logout, isAuthenticated, currentUser} = useContext(UserContext);
+    const { logout, isAuthenticated, currentUser } = useContext(UserContext);
 
-    function handleLogout () {
-        console.log(currentUser);
+    const handleLogout = () => {
         logout();
         history.push('/login')
-        return <Redirect to='/login'/>
     }
 
     if (isAuthenticated) {

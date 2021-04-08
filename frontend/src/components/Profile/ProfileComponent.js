@@ -10,7 +10,7 @@ export default class ProfileComponent extends Component {
     }
 
     componentDidMount() {
-
+        console.log('hello');
     }
 
     render() {

@@ -1,24 +1,37 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form"
 import style from './RegisterComponent.module.css';
-import { register } from '../../service/authService';
+import { useHistory, } from 'react-router-dom';
+import { signup } from '../../service/authService';
 
 export default function RegisterComponent() {
 
-    const [userData, setUserData] = useState([]);
     const { register, handleSubmit, errors } = useForm();
+    const [errorMessages, setErrorMessages] = useState([]);
+    const history = useHistory();
 
-    const onSubmit = data => {
+    const onSubmit =  (data) => {
         console.log(data);
+let arr = []
 
-        setUserData(register(data));
+        signup(data)
+        .catch(err => {
+            setErrorMessages(err)
+            history.push('/register')
+            console.log(errorMessages);
+            return;
+        })
+        history.push('/login')
     }
 
     return (
         <div className={style.component}>
             <form onSubmit={handleSubmit(onSubmit)}>
+            {errorMessages && errorMessages.map(x => {
+                return <p className={style.error}>{x.errorMessage}</p>
+            })}
                 <div className={style.inputField}>
-                    <label for="username">Username</label>
+                    <label htmlFor="username">Username</label>
                     <input
                         type="text"
                         placeholder="Your username..."
@@ -32,23 +45,23 @@ export default function RegisterComponent() {
 
                 </div>
                 <div className={style.inputField}>
-                    <label for="email">Email</label>
+                    <label htmlFor="email">Email</label>
                     <input type="email" placeholder="example@example.com" id="email" name="email" ref={register} />
                 </div>
                 <div className={style.inputField}>
-                    <label for="password">Password</label>
+                    <label htmlFor="password">Password</label>
                     <input type="password" placeholder="********" id="password" name="password" ref={register} />
                 </div>
                 <div className={style.inputField}>
-                    <label for="repeatPassword">Confirm Password</label>
+                    <label htmlFor="repeatPassword">Confirm Password</label>
                     <input type="password" placeholder="********" id="repeatPassword" name="repeatPassword" ref={register} />
                 </div>
                 <div className={style.inputField}>
-                    <label for="annualVacationDaysAllowed">Annual Vacation Days Allowed</label>
+                    <label htmlFor="annualVacationDaysAllowed">Annual Vacation Days Allowed</label>
                     <input type="number" min="0" placeholder="0" id="annualVacationDaysAllowed" name="annualVacationDaysAllowed" ref={register} />
                 </div>
                 <div className={style.inputField}>
-                    <label for="annualSickDaysAllowed">Annual Sick Days Allowed</label>
+                    <label htmlFor="annualSickDaysAllowed">Annual Sick Days Allowed</label>
                     <input type="number" min="0" placeholder="0" id="annualSickDaysAllowed" name="annualSickDaysAllowed" ref={register} />
                 </div>
                 <div className={style.action}>

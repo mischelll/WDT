@@ -10,7 +10,9 @@
     background-color: #4b79be; /* Green */
   border: none;
   color: white;
+  margin: auto;
   margin-top: 20px;
+  margin-bottom: 20px;
   padding: 15px 32px;
   text-align: left;
   text-decoration: none;
@@ -25,9 +27,9 @@
 table {
   background: #368eac;
   border-radius: 0.25em;
-  
+  padding-top: 20px;
   border-collapse: collapse;
-  margin: 1em;
+  margin: auto;
 }
 th {
   border-bottom: 1px solid #364043;

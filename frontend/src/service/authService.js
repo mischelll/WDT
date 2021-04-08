@@ -1,24 +1,23 @@
 const baseUrl = 'http://localhost:8080/api/auth';
 
-export const register = (registerData) => {
+export const signup = (registerData) => {
     const registerUrl = baseUrl + '/register'
-
+    console.log("asdasdas");
     return fetch(registerUrl, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(registerData)
     })
         .then(res => res.json())
-        .then(token => {
-            console.log(token);
-            // const bearerToken = result.value.headers.authorization;
-            // if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
-            //     const jwt = bearerToken.slice(7, bearerToken.length);
-            //     Storage.session.set(AUTH_TOKEN_KEY, jwt);
-
-            // }
+        .then(data => {
+            console.log(data);
+            if (data) {
+                return Promise.reject(data);
+            }
         })
-        .catch(err => console.log(err.message));
+        .catch(err => {
+            throw err;
+        });
 }
 
 export const login = (loginData) => {
@@ -50,7 +49,7 @@ export const getAdmin = () => {
 }
 
 export const getUserInfo = () => {
-   return fetch('http://localhost:8080/api/user/info', {
+    return fetch('http://localhost:8080/api/user/info', {
         method: "GET",
         headers: { 'Authorization': "Bearer " + sessionStorage.getItem("AUTH_TOKEN_KEY") },
     })

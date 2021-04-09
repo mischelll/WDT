@@ -1,21 +1,11 @@
-/* .container {
-    width: 50px;
-    height: 50px;
-    background-color: red;
+ .container {
+    width: 1000px;
+    height: inherit;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 15px 32px;
     position: relative;
-    animation-name: example;
-    animation-duration: 10s;
-    animation-iteration-count: 3;
-  }
+   
+  } 
   
-  @keyframes example {
-    0%   {background-color:red; left:0px; top:0px;}
-    25%  {background-color:yellow; left:200px; top:0px;}
-    50%  {background-color:blue; left:200px; top:200px;}
-    75%  {background-color:green; left:0px; top:200px;}
-    100% {background-color:red; left:0px; top:0px;}
-  }
-  @keyframes example {
-    from {left: 0px;}
-    to {left: 300px;}
-  } */

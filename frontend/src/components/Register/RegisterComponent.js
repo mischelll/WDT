@@ -12,7 +12,7 @@ export default function RegisterComponent() {
 
     const onSubmit =  (data) => {
         console.log(data);
-let arr = []
+        let arr = []
 
         signup(data)
         .catch(err => {

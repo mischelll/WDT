@@ -1,4 +1,12 @@
- .container {
+.welcomeContainer{
+  color: wheat;
+  text-align: center;
+  margin-top: 150px;
+ 
+  text-transform:uppercase;
+} 
+ 
+ .calendarContainer {
     width: 1000px;
     height: inherit;
     margin: auto;
@@ -6,6 +14,12 @@
     margin-bottom: 20px;
     padding: 15px 32px;
     position: relative;
+    background: -moz-linear-gradient(to bottom, #294475, #242955);
+    background: linear-gradient(to bottom, #294475, #242955);
+    border-style: double;
+    border-radius: 25px;
+   
+    opacity: 99%;
    
   } 
   

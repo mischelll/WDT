@@ -21,7 +21,7 @@ export default function VacationDay() {
     return (
         <div>
             <button className={style.requestVacaDaysButton}>+ Request new vacation period</button>
-            <table className={style.tableBody}>
+            <table className={style.table}>
                 <thead className={style.tableHead}>
                     <tr>
                         <th>From</th>
@@ -32,6 +32,12 @@ export default function VacationDay() {
                     </tr>
                 </thead>
                 <tbody>
+                    {mapVacationDays()}
+                    {mapVacationDays()}
+                    {mapVacationDays()}
+                    {mapVacationDays()}
+                    {mapVacationDays()}
+                    {mapVacationDays()}
                     {mapVacationDays()}
                 </tbody>
                 <tfoot>
@@ -54,6 +60,8 @@ export default function VacationDay() {
                 <td>4</td>
                 <td>395 $</td>
                 <td>{x.status}</td>
+                <td><button className={style.editDayButton}><span>Edit</span></button></td>
+                <td><button className={style.deleteDayButton}><span>Delete</span></button></td>
             </tr>
             );
         }else{

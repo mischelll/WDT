@@ -11,13 +11,27 @@
   border: none;
   color: white;
   margin: auto;
-  margin-top: 20px;
+  margin-top: 150px;
   margin-bottom: 20px;
   padding: 15px 32px;
   text-align: left;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+}
+
+.editDayButton {
+  background-color: #4b79be; /* Green */
+border: none;
+color: white;
+margin: auto;
+margin-top: 150px;
+margin-bottom: 20px;
+padding: 15px 32px;
+text-align: left;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
 }
 .requestVacaDaysButton:hover{
     background-color: #2e599b;

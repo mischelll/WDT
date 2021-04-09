@@ -47,6 +47,8 @@ export default function SickDayComponent() {
                 <td>{x.reason}</td>
                 <td>395 $</td>
                 <td>{x.user}</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
             </tr>
             );
         }else{

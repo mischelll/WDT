@@ -9,6 +9,8 @@
 .requestVacaDaysButton {
   background-color: #4b79be; /* Green */
   border: none;
+  border-radius: 30px;
+  outline: none;
   color: white;
   margin: auto;
   margin-top: 20px;
@@ -25,10 +27,93 @@
     cursor:pointer;
 }
 
-table {
+.editDayButton {
+  background-color: #e2c12c; /* Green */
+  border: none;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-align: left;
+  outline: none;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.editDayButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.editDayButton span:after {
+  
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.editDayButton:hover span {
+  padding-right: 3.5px;
+  padding-left: 3.5px;
+}
+
+.editDayButton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.deleteDayButton{
+  background-color: #e2502c; /* Green */
+  border: none;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-align: left;
+  outline: none;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.deleteDayButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.deleteDayButton span:after {
+  
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.deleteDayButton:hover span {
+  padding-right: 3.5px;
+  padding-left: 3.5px;
+}
+
+.deleteDayButton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+.table {
   background: #368eac;
   border-radius: 0.25em;
-  
+  margin-bottom: 200px;
   border-collapse: collapse;
   margin: auto;
 }
@@ -51,7 +136,7 @@ td {
 tbody tr {
   transition: background 0.25s ease;
 }
-tbody tr:hover {
+tbody tr:hover  {
   background: #014055;
 }
 

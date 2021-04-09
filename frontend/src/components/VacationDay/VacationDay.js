@@ -1,24 +1,22 @@
 import style from './VacationDay.module.css'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../../contexts/UserContext';
+import { getVacationDaysByUser } from '../../service/vacationDayService';
 
 export default function VacationDay() {
+    const { currentUser } = useContext(UserContext);
     const [vacationDays, setVacationDays] = useState([]);
     const [revenue, setRevenue] = useState();
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/vacationDay', {
-            method: "GET",
-            headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("AUTH_TOKEN_KEY") }
-        })
-            .then(res => res.json())
-            .then((data) => {
-                console.log(data);
-                setVacationDays(data);
+        if (currentUser._id) {
+            getVacationDaysByUser(currentUser._id)
+                .then(data => {
+                    setVacationDays(data);
+                })
+        }
 
-            })
-            .catch(err => console.log(err.message));
-
-    }, [setVacationDays]);
+    }, [setVacationDays, currentUser._id]);
 
     return (
         <div>
@@ -58,6 +56,8 @@ export default function VacationDay() {
                 <td>{x.status}</td>
             </tr>
             );
+        }else{
+            return <h2>No vacation days</h2>
         }
     }
 }

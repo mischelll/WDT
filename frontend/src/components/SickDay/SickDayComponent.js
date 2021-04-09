@@ -1,24 +1,22 @@
 import style from './SickDay.module.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../../contexts/UserContext';
+import { getSicknDaysByUser } from '../../service/sickDayService';
 
 export default function SickDayComponent() {
+    const { currentUser } = useContext(UserContext);
     const [sickDays, setSickDays] = useState([]);
     const [revenue, setRevenue] = useState();
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/sickDay', {
-            method: "GET",
-            headers: { 'Authorization': 'Bearer ' +  sessionStorage.getItem("AUTH_TOKEN_KEY") }
-        })
-            .then(res => res.json())
-            .then((data) => {
-                console.log(data);
-                setSickDays(data);
+        if (currentUser._id) {
+            getSicknDaysByUser(currentUser._id)
+                .then(data => {
+                    setSickDays(data);
+                })
+        }
 
-            })
-            .catch(err => console.log(err.message));
-
-    }, [setSickDays]);
+    }, [setSickDays, currentUser._id]);
 
     return (
         <div>
@@ -51,6 +49,8 @@ export default function SickDayComponent() {
                 <td>{x.user}</td>
             </tr>
             );
+        }else{
+            return <h2>No sick days</h2>
         }
     }
 }

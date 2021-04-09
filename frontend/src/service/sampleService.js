@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:8080';
+const baseUrl = 'http://localhost:8082';
 
 export const getMessage = () => {
     let messageUrl = baseUrl + '/api/home';

@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:8080/api/auth';
+const baseUrl = 'http://localhost:8082/api/auth';
 
 export const signup = (registerData) => {
     const registerUrl = baseUrl + '/register'
@@ -49,7 +49,7 @@ export const getAdmin = () => {
 }
 
 export const getUserInfo = () => {
-    return fetch('http://localhost:8080/api/user/info', {
+    return fetch('http://localhost:8082/api/user/info', {
         method: "GET",
         headers: { 'Authorization': "Bearer " + sessionStorage.getItem("AUTH_TOKEN_KEY") },
     })

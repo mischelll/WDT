@@ -18,7 +18,7 @@ export default class UserContextProvider extends Component {
 
     componentDidMount() {
         const token = sessionStorage.getItem("AUTH_TOKEN_KEY");
-        console.log(typeof token);
+        
         if (token !== 'undefined' && token !== null) {
             Promise.resolve(getUserInfo())
                 .then(data => {

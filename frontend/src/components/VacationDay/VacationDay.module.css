@@ -54,7 +54,6 @@
 }
 
 
-
 .editDayButton {
   background-color: #e2c12c; /* Green */
   border: none;
@@ -78,7 +77,6 @@
 }
 
 .editDayButton span:after {
-  
   position: absolute;
   opacity: 0;
   top: 0;
@@ -119,7 +117,6 @@
 }
 
 .deleteDayButton span:after {
-  
   position: absolute;
   opacity: 0;
   top: 0;
@@ -137,7 +134,6 @@
   right: 0;
 }
 
-
 .table {
   background: #368eac;
   border-radius: 0.25em;
@@ -145,6 +141,7 @@
   border-collapse: collapse;
   margin: auto;
 }
+
 th {
   border-bottom: 1px solid #364043;
   color: #cac2ab;

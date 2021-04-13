@@ -1,5 +1,4 @@
 import style from './VacationDay.module.css'
-import HomeComponent from '../Home/HomeComponent'
 import ReactModal from 'react-modal';
 import React, { useEffect, useState, useContext } from 'react';
 import { useForm } from "react-hook-form"
@@ -92,7 +91,22 @@ export default function VacationDay() {
             transform: 'translate(-50%, -50%)'
         },
         overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            backgroundColor: "rgba(0, 0, 0, 0.2)",
+
+        }
+    };
+
+    const customStylesDelete = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        },
+        overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.2)",
 
         }
     };
@@ -102,8 +116,8 @@ export default function VacationDay() {
         return new Date(date?.getFullYear(), date?.getMonth(), date?.getDate() + daysToAdd)
     }
 
-    function handleDelete() {
-        return (<Popup info="slash"></Popup>)
+    function handleDelete(e) {
+        console.log(e);
     }
 
     return (
@@ -139,6 +153,48 @@ export default function VacationDay() {
                         />
                         <button>Request</button>
                     </form>
+                </ReactModal>
+
+                <ReactModal
+                    isOpen={isEditFormVisible}
+                    onRequestClose={() => setEditForm(false)}
+                    contentLabel="Example Modal"
+                    style={customStyles}
+                    ariaHideApp={false}
+                >
+                    <form onSubmit={handleSubmit(onEdit)}>
+                        <h2>Edit working day</h2>
+                        <input type="hidden" id="vacaDayId" name="vacaDayId" ref={register()} />
+                        <label>Start time</label>
+                        <DatePicker
+                            className={style.editForm}
+                            selected={startEditDate}
+                            onChange={date => setstartEditDate(date)}
+                            minDate={addDays(new Date(), 0)}
+
+                        />
+                        <label>End time</label>
+                        <DatePicker
+                            className={style.editForm}
+                            selected={endEditDate}
+                            onChange={date => setendEditDate(date)}
+                            minDate={addDays(startEditDate, 1)}
+                        />
+                        {startEditDate < endEditDate ? <button>Edit</button> : <button disabled>Edit</button>}
+                    </form>
+                </ReactModal>
+
+
+                <ReactModal
+                    isOpen={isDeleteFormVisible}
+                    onRequestClose={() => setDeleteForm(false)}
+                    contentLabel="Example Modal"
+                    style={customStylesDelete}
+                    ariaHideApp={false}
+                >
+                    <h1>Sure you want to delete this? </h1>
+                    <button onClick={handleDelete} >Yes</button>
+                    <button onClick={() => setDeleteForm(false)}>No</button>
                 </ReactModal>
             </div>
             <table className={style.table}>
@@ -193,46 +249,7 @@ export default function VacationDay() {
                             <td>-</td>
                     }()}
 
-                    <ReactModal
-                        isOpen={isEditFormVisible}
-                        onRequestClose={() => setEditForm(false)}
-                        contentLabel="Example Modal"
-                        style={customStyles}
-                        ariaHideApp={false}
-                    >
-                        <form onSubmit={handleSubmit(onEdit)}>
-                            <h2>Edit working day</h2>
-                            <input type="hidden" id="vacaDayId" name="vacaDayId" value={x._id} ref={register()} />
-                            <label >Start time</label>
-                            <DatePicker
-                                className={style.editForm}
-                                selected={startEditDate}
-                                onChange={date => setstartEditDate(date)}
-                                minDate={addDays(new Date(), 0)}
 
-                            />
-                            <label >End time</label>
-                            <DatePicker
-                                className={style.editForm}
-                                selected={endEditDate}
-                                onChange={date => setendEditDate(date)}
-                                minDate={addDays(startEditDate, 1)}
-                            />
-                            {startEditDate < endEditDate ? <button>Edit</button> : <button disabled>Edit</button>}
-                        </form>
-                    </ReactModal>
-
-                    <ReactModal
-                        isOpen={isDeleteFormVisible}
-                        onRequestClose={() => setDeleteForm(false)}
-                        contentLabel="Example Modal"
-                        style={customStyles}
-                        ariaHideApp={false}
-                    >
-                        <h1>Sure you want to delete this? </h1>
-                        <button>Yes</button>
-                        <button>No</button>
-                    </ReactModal>
                 </tr>
             );
         } else {

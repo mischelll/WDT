@@ -27,8 +27,8 @@ export default function Header({ loggedIn, username }) {
                     <Link to="/sickDays">
                         <li><a href="/" className={style.navLink}>Sick Days</a></li>
                     </Link>
-                    <Link to={`/user/profile/${currentUser.username}`}>
-                        <li className={style.navSide}><a href="/" className={style.navLink}>{"Hello, " + currentUser.username}</a></li>
+                    <Link to={`/user/profile/${currentUser?.username}`}>
+                        <li className={style.navSide}><a href="/" className={style.navLink}>{"Hello, " + currentUser?.username}</a></li>
                     </Link>
                     <Link to="/about">
                         <li><a href="/about" className={style.navLink}>About</a></li>

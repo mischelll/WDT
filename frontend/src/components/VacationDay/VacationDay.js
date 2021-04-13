@@ -6,15 +6,18 @@ import { useForm } from "react-hook-form"
 import { UserContext } from '../../contexts/UserContext';
 import { getVacationDaysByUser } from '../../service/vacationDayService';
 import DatePicker from "react-date-picker";
+import { Popup } from '../Popup/Popup';
 
 export default function VacationDay() {
     const { currentUser } = useContext(UserContext);
     const [vacationDays, setVacationDays] = useState([]);
     const [isEditFormVisible, setEditForm] = useState(false);
+    const [isDeleteFormVisible, setDeleteForm] = useState(false);
     const [isRequestDayFormVisible, setRequestDayForm] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-
+    const [startEditDate, setstartEditDate] = useState(new Date());
+    const [endEditDate, setendEditDate] = useState(new Date());
     const { register, handleSubmit, errors } = useForm();
 
     useEffect(() => {
@@ -24,22 +27,19 @@ export default function VacationDay() {
                     setVacationDays(data);
                 })
         }
-
     }, [setVacationDays, currentUser._id]);
 
 
     function onSubmit(e) {
-        console.log(startDate.toISOString());
-        console.log(endDate.toISOString());
-        console.log(startDate?.toISOString().slice(0, 10));
-        console.log(endDate?.toISOString().slice(0, 10));
+        startDate.setDate(startDate.getDate() + 1)
+        endDate.setDate(endDate.getDate() + 1)
 
         fetch('http://localhost:8082/api/vacationDay', {
             method: "POST",
             headers: {
                 'Authorization': 'Bearer ' + sessionStorage.getItem("AUTH_TOKEN_KEY"),
                 'Content-Type': 'application/json',
-                'Accept':'application/json'
+                'Accept': 'application/json'
             },
             body: JSON.stringify(
                 {
@@ -48,8 +48,36 @@ export default function VacationDay() {
                 }
             )
         })
-            .then(data => {
-                console.log(data);
+            .then(data => data.json())
+            .then(day => {
+                console.log(day);
+            })
+            .catch(e => e.message);
+    }
+
+    function onEdit(data) {
+        console.log(data);
+
+        startEditDate.setDate(startEditDate.getDate() + 1)
+        endEditDate.setDate(endEditDate.getDate() + 1)
+        fetch('http://localhost:8082/api/vacationDay', {
+            method: "PUT",
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem("AUTH_TOKEN_KEY"),
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    "_id": data.vacaDayId,
+                    "from": startEditDate?.toISOString().slice(0, 10),
+                    "to": endEditDate?.toISOString().slice(0, 10)
+                }
+            )
+        })
+            .then(data => data.json())
+            .then(day => {
+                console.log(day);
             })
             .catch(e => e.message);
     }
@@ -72,6 +100,10 @@ export default function VacationDay() {
     function addDays(date, daysToAdd) {
 
         return new Date(date?.getFullYear(), date?.getMonth(), date?.getDate() + daysToAdd)
+    }
+
+    function handleDelete() {
+        return (<Popup info="slash"></Popup>)
     }
 
     return (
@@ -102,7 +134,7 @@ export default function VacationDay() {
                             className={style.editForm}
                             selected={endDate + 1}
                             onChange={date => setEndDate(date)}
-                            minDate={addDays(startDate, 0)}
+                            minDate={addDays(startDate, 1)}
                             isClearable={true}
                         />
                         <button>Request</button>
@@ -121,6 +153,46 @@ export default function VacationDay() {
                 </thead>
                 <tbody>
                     {mapVacationDays()}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>16 missed Wds</td>
+                        <td>1234 $ in revenue</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    )
+
+    function mapVacationDays() {
+        if (vacationDays.length > 0) {
+            return vacationDays.map(x =>
+                <tr key={x._id}>
+                    <td>{x.from.substring(0, 10)}</td>
+                    <td>{x.to.substring(0, 10)}</td>
+                    <td>4</td>
+                    <td>395 $</td>
+                    <td>{x.status}</td>
+
+                    {function f() {
+                        return x.status === 'pending' ?
+                            <td><button onClick={() => setEditForm(true)} className={style.editDayButton}><span>Edit</span></button></td> :
+                            x.status === 'approved' ?
+                                <td><Popup info="tick" /></td>
+                                :
+                                <td><Popup info="info" /></td>
+                    }()}
+
+                    {function f() {
+                        return x.status === 'pending' ?
+                            <td><button onClick={() => setDeleteForm(true)} className={style.deleteDayButton}><span>Delete</span></button></td>
+
+                            :
+                            <td>-</td>
+                    }()}
+
                     <ReactModal
                         isOpen={isEditFormVisible}
                         onRequestClose={() => setEditForm(false)}
@@ -128,50 +200,40 @@ export default function VacationDay() {
                         style={customStyles}
                         ariaHideApp={false}
                     >
-                        <form className={style.editForm}>
+                        <form onSubmit={handleSubmit(onEdit)}>
                             <h2>Edit working day</h2>
+                            <input type="hidden" id="vacaDayId" name="vacaDayId" value={x._id} ref={register()} />
                             <label >Start time</label>
-                            <input name="start_time" type="text"></input>
+                            <DatePicker
+                                className={style.editForm}
+                                selected={startEditDate}
+                                onChange={date => setstartEditDate(date)}
+                                minDate={addDays(new Date(), 0)}
+
+                            />
                             <label >End time</label>
-                            <input name="end_time" type="text"></input>
+                            <DatePicker
+                                className={style.editForm}
+                                selected={endEditDate}
+                                onChange={date => setendEditDate(date)}
+                                minDate={addDays(startEditDate, 1)}
+                            />
+                            {startEditDate < endEditDate ? <button>Edit</button> : <button disabled>Edit</button>}
                         </form>
                     </ReactModal>
 
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td>Hello</td>
-                        <td>Hello</td>
-                        <td>Hello</td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    )
-
-
-
-    function mapVacationDays() {
-        if (vacationDays.length > 0) {
-            return vacationDays.map(x => <tr key={x._id}>
-                <td>{x.from.substring(0, 10)}</td>
-                <td>{x.to.substring(0, 10)}</td>
-                <td>4</td>
-                <td>395 $</td>
-                <td>{x.status}</td>
-                {function f() {
-                    return x.status === 'pending' ?
-                        <td><button onClick={() => setEditForm(true)} className={style.editDayButton}><span>Edit</span></button></td> :
-                        <td>-</td>
-                }()}
-
-                {function f() {
-                    return x.status === 'pending' ?
-                        <td><button className={style.deleteDayButton}><span>Delete</span></button></td> :
-                        <td>-</td>
-                }()}
-
-            </tr>
+                    <ReactModal
+                        isOpen={isDeleteFormVisible}
+                        onRequestClose={() => setDeleteForm(false)}
+                        contentLabel="Example Modal"
+                        style={customStyles}
+                        ariaHideApp={false}
+                    >
+                        <h1>Sure you want to delete this? </h1>
+                        <button>Yes</button>
+                        <button>No</button>
+                    </ReactModal>
+                </tr>
             );
         } else {
             return <h2>No vacation days</h2>

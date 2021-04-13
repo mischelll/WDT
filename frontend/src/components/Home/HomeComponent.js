@@ -14,7 +14,7 @@ export default function Home() {
 
     if (isAuthenticated) {
         return (
-            <HomeAuthenticatedComponent username={currentUser.username} />
+            <HomeAuthenticatedComponent username={currentUser?.username} />
         )
     }
     return (

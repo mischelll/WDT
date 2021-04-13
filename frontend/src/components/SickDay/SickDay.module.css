@@ -6,36 +6,131 @@
   box-sizing: border-box;
 }
 
-.requestVacaDaysButton {
-    background-color: #4b79be; /* Green */
+.reqButtonContainer{
+  margin-bottom: 10px;
+}
+
+.requestSickDaysButton {
+  background-color: #2460bb; /* Green */
   border: none;
+  border-radius: 30px;
+  outline: none;
   color: white;
   margin: auto;
-  margin-top: 150px;
+  margin-top: 20px;
   margin-bottom: 20px;
   padding: 15px 32px;
   text-align: left;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.requestSickDaysButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.requestSickDaysButton span:after {
+  
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.requestSickDaysButton:hover span {
+  padding-top: 5.5px;
+  padding-bottom: 5.5px;
+  padding-right: 5.5px;
+  padding-left: 5.5px;
+  color: #33ff00;
+  font-size: 17px;
 }
 
 .editDayButton {
-  background-color: #4b79be; /* Green */
-border: none;
-color: white;
-margin: auto;
-margin-top: 150px;
-margin-bottom: 20px;
-padding: 15px 32px;
-text-align: left;
-text-decoration: none;
-display: inline-block;
-font-size: 16px;
+  background-color: #e2c12c; /* Green */
+  border: none;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-align: left;
+  outline: none;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: all 0.5s;
+  cursor: pointer;
 }
-.requestVacaDaysButton:hover{
-    background-color: #2e599b;
-    font-size: 17px;
+
+.editDayButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.editDayButton span:after {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.editDayButton:hover span {
+  padding-right: 3.5px;
+  padding-left: 3.5px;
+}
+
+.editDayButton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.deleteDayButton{
+  background-color: #e2502c; /* Green */
+  border: none;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-align: left;
+  outline: none;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.deleteDayButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.deleteDayButton span:after {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.deleteDayButton:hover span {
+  padding-right: 3.5px;
+  padding-left: 3.5px;
+}
+
+.deleteDayButton:hover span:after {
+  opacity: 1;
+  right: 0;
 }
 
 table {

@@ -6,8 +6,12 @@
   box-sizing: border-box;
 }
 
+.reqButtonContainer{
+  margin-bottom: 10px;
+}
+
 .requestVacaDaysButton {
-  background-color: #4b79be; /* Green */
+  background-color: #2460bb; /* Green */
   border: none;
   border-radius: 30px;
   outline: none;
@@ -20,12 +24,36 @@
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  transition: all 0.5s;
+  cursor: pointer;
 }
-.requestVacaDaysButton:hover{
-    background-color: #2e599b;
-    font-size: 17px;
-    cursor:pointer;
+
+.requestVacaDaysButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
 }
+
+.requestVacaDaysButton span:after {
+  
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.requestVacaDaysButton:hover span {
+  padding-top: 5.5px;
+  padding-bottom: 5.5px;
+  padding-right: 5.5px;
+  padding-left: 5.5px;
+  color: #33ff00;
+  font-size: 17px;
+}
+
+
 
 .editDayButton {
   background-color: #e2c12c; /* Green */
@@ -138,5 +166,17 @@ tbody tr {
 }
 tbody tr:hover  {
   background: #014055;
+}
+
+input {
+  background-color: white;
+}
+
+.editForm input {
+  background-color: black;
+}
+.editForm h2{
+  color: black;
+  
 }
 

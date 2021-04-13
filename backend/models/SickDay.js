@@ -22,6 +22,12 @@ const sickDaySchema = new Schema({
         minLength: [5, 'Reason must be at least 5 characters long.']
     },
 
+    status: {
+        type: String,
+        enum: ['approved', 'pending'],
+        default: 'pending'
+    },
+
     user: {
         type: mongoose.Types.ObjectId,
         ref: 'User'

@@ -1,0 +1,161 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.editDayButton {
+  background-color: #e2c12c; /* Green */
+  border: none;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-align: left;
+  outline: none;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.editDayButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.editDayButton span:after {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.editDayButton:hover span {
+  padding-right: 3.5px;
+  padding-left: 3.5px;
+}
+
+.editDayButton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.deleteDayButton{
+  background-color: #e2502c; /* Green */
+  border: none;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-align: left;
+  outline: none;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.deleteDayButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.deleteDayButton span:after {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.deleteDayButton:hover span {
+  padding-right: 3.5px;
+  padding-left: 3.5px;
+}
+
+.deleteDayButton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+.manageButton{
+    background-color: #1a1ee0; /* Green */
+    border: none;
+    color: white;
+    border-radius: 30px;
+    padding: 10px 20px;
+    text-align: left;
+    outline: none;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: all 0.5s;
+    cursor: pointer;
+  }
+  
+  .manageButton span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .manageButton span:after {
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .manageButton:hover span {
+    padding-right: 3.5px;
+    padding-left: 3.5px;
+  }
+  
+  .manageButton:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
+table {
+  background: #368eac;
+  border-radius: 0.25em;
+  margin: 70px;
+  padding-top: 20px;
+  border-collapse: collapse;
+  margin: auto;
+}
+th {
+  border-bottom: 1px solid #364043;
+  color: #cac2ab;
+  font-size: 0.85em;
+  font-weight: 600;
+  padding: 0.5em 1em;
+  text-align: center;
+}
+td {
+  color: #fff;
+  font-weight: 400;
+  padding: 0.65em 1em;
+}
+.disabled td {
+  color: #4F5F64;
+}
+tbody tr {
+  transition: background 0.25s ease;
+}
+tbody tr:hover {
+  background: #014055;
+}
+

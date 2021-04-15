@@ -62,3 +62,14 @@ export const getUserInfo = () => {
 export const logout = () => {
     sessionStorage.clear()
 }
+
+export const getRoleName = (roleId) => {
+    return fetch('http://localhost:8082/api/role/' + roleId, {
+        method: "GET",
+        headers: { 'Authorization': "Bearer " + sessionStorage.getItem("AUTH_TOKEN_KEY") },
+    })
+        .then(res => res.json())
+        .catch(err => {
+            console.log(err.message);
+        });
+}

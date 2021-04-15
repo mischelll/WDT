@@ -15,7 +15,7 @@ export const AboutCardLayout = () => {
                 <AboutCardContent title={aboutContentUtil.REQUEST_SICK_VACATION_DAYS_TITLE} description={aboutContentUtil.REQUEST_SICK_VACATION_DAYS_DESC} />
             </div>
             <div className={style.column}>
-                <AboutCardContent />
+            <AboutCardContent title={aboutContentUtil.REQUEST_SICK_VACATION_DAYS_TITLE} description={aboutContentUtil.REQUEST_SICK_VACATION_DAYS_DESC} />
             </div>
         </div>
     )

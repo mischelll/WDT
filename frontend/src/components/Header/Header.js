@@ -7,7 +7,7 @@ import { logout } from '../../service/authService';
 
 export default function Header({ loggedIn, username }) {
     const history = useHistory();
-    const { logout, isAuthenticated, currentUser } = useContext(UserContext);
+    const { logout, isAuthenticated, currentUser, isAdmin } = useContext(UserContext);
 
     const handleLogout = () => {
         logout();
@@ -37,9 +37,43 @@ export default function Header({ loggedIn, username }) {
                         <li><a href="/" className={style.navLink}>Logout</a></li>
                     </Link>
 
+                    {isAdmin &&
+                        <>
+                            <Link to="/admin/vacationDays">
+                                <li><a href="/" className={style.navLink}>Manage Vacation Days</a></li>
+                            </Link>
+                            <Link to="/admin/sickDays">
+                                <li><a href="/" className={style.navLink}>Manage Sick Days</a></li>
+                            </Link>
+                        </>}
                 </ul>
             </div>
         )
+    } else if (isAuthenticated && isAdmin) {
+        return (
+            <div className={style.nav}>
+                <ul>
+                    <Link to="/home">
+                        <li><a href="/" className={style.navLink}>Home</a></li>
+                    </Link>
+                    <Link to={`/user/profile/${currentUser?.username}`}>
+                        <li className={style.navSide}><a href="/" className={style.navLink}>{"Hello, " + currentUser?.username}</a></li>
+                    </Link>
+                    <Link to="/admin/vacationDays">
+                        <li><a href="/" className={style.navLink}>Manage Vacation Days</a></li>
+                    </Link>
+                    <Link to="/admin/sickDays">
+                        <li><a href="/" className={style.navLink}>Manage Sick Days</a></li>
+                    </Link>
+                    <Link to="/logout" onClick={handleLogout}>
+                        <li><a href="/" className={style.navLink}>Logout</a></li>
+                    </Link>
+
+                </ul>
+            </div>
+        )
+
+
     }
     return (
         <div className={style.nav}>

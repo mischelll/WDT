@@ -29,8 +29,8 @@ const createSickDay = (sickDayData, userId) => {
         });
 };
 
-const getAllSickDays = () => {
-    return SickDay.find({}).lean();
+const getAllSickDays = async () => {
+    return await SickDay.find({}).lean();
 };
 
 const getSickDaysByUserId = (userId) => {

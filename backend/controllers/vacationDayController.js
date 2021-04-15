@@ -1,13 +1,23 @@
 const router = require('express').Router();
 const vacationDayService = require('../services/vacationDayService');
-
+const userService = require('../services/userService');
 const isAuthenticated = require('../middleware/isAuthenticated');
+const { Logform } = require('winston');
 
-router.get('/', isAuthenticated, (req, res) => {
-    vacationDayService.getAllVacationDays()
-        .then(days => {
+router.get('/', isAuthenticated, async (req, res) => {
+    let mappedDays = [];
+    let vacationDays = await vacationDayService.getAllVacationDays();
+    
+    let newArr = vacationDays.map(async (day) => {
+        let user = await userService.getUserUsernameById(day.user);
+        day.username = user.username;
+        return Object.assign(day, { ...day, username: user.username });
+    })
+
+    Promise.all(newArr)
+        .then(mappedVacationDays => {
             res.status(200);
-            res.send(days)
+            res.send(mappedVacationDays)
         })
         .catch(err => {
             res.status(404);
@@ -16,8 +26,11 @@ router.get('/', isAuthenticated, (req, res) => {
                 code: 404,
                 time: new Date().toISOString()
             });
+
         });
 });
+
+
 
 router.get('/user/:userId', isAuthenticated, (req, res) => {
     vacationDayService.getVacationDayByUserId(req.params['userId'])

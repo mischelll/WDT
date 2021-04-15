@@ -27,7 +27,7 @@ export default class UserContextProvider extends Component {
                         this.setState({ isAuthenticated: true, currentUser: userInfo, isAdmin: true });
                     } else {
                         console.log('asdasd');
-                        this.setState({ isAuthenticated: true, currentUser: userInfo });
+                        this.setState({ isAuthenticated: true, currentUser: userInfo, isAdmin: false });
                     }
                 })
                 .catch(err => console.log(err.message))
@@ -35,11 +35,15 @@ export default class UserContextProvider extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        
+        console.log(prevState.currentUser.roleName);
+        console.log(this.state.currentUser.roleName);
+       if(prevState.currentUser.roleName !== this.state.currentUser.roleName){
+           this.setState({isAdmin: this.state.isAdmin})
+       }
     }
 
     handleLogoutClick() {
-        this.setState({ isAuthenticated: false, currentUser: {} })
+        this.setState({ isAuthenticated: false, currentUser: {}, isAdmin: false })
         logout();
     }
 
@@ -49,7 +53,13 @@ export default class UserContextProvider extends Component {
                 Promise.resolve(getUserInfo())
                     .then(data => {
                         let { userInfo } = data
-                        this.setState({ isAuthenticated: true, currentUser: userInfo });
+                        if (userInfo.roleName === 'ROLE_ADMIN') {
+                            this.setState({ isAuthenticated: true, currentUser: userInfo, isAdmin: true });
+                        } else {
+                            console.log('asdasd');
+                            this.setState({ isAuthenticated: true, currentUser: userInfo, isAdmin: false });
+                        }
+                       
                     })
                     .catch(err => console.log(err.message))
             }

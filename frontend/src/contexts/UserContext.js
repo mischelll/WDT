@@ -1,5 +1,5 @@
 import React, { createContext, Component } from 'react';
-import { login, logout, getUserInfo } from '../service/authService'
+import { login, logout, getUserInfo, getRoleName } from '../service/authService'
 
 export const UserContext = createContext();
 
@@ -18,21 +18,29 @@ export default class UserContextProvider extends Component {
 
     componentDidMount() {
         const token = sessionStorage.getItem("AUTH_TOKEN_KEY");
-        
+
         if (token !== 'undefined' && token !== null) {
             Promise.resolve(getUserInfo())
                 .then(data => {
-                    console.log('ded');
-                    let {userInfo} = data
-                    this.setState({ isAuthenticated: true, currentUser: userInfo });
+                    let { userInfo } = data
+                    if (userInfo.roleName === 'ROLE_ADMIN') {
+                        this.setState({ isAuthenticated: true, currentUser: userInfo, isAdmin: true });
+                    } else {
+                        console.log('asdasd');
+                        this.setState({ isAuthenticated: true, currentUser: userInfo });
+                    }
                 })
                 .catch(err => console.log(err.message))
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        
+    }
+
     handleLogoutClick() {
-        logout();
         this.setState({ isAuthenticated: false, currentUser: {} })
+        logout();
     }
 
     handleLoginClick(data) {
@@ -40,12 +48,12 @@ export default class UserContextProvider extends Component {
             if (token.id_token) {
                 Promise.resolve(getUserInfo())
                     .then(data => {
-                        let {userInfo} = data
+                        let { userInfo } = data
                         this.setState({ isAuthenticated: true, currentUser: userInfo });
                     })
                     .catch(err => console.log(err.message))
             }
-            
+
         });
 
     }

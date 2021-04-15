@@ -46,8 +46,8 @@ const updateVacationDay = (vacationDayData) => {
 
 };
 
-const getAllVacationDays = () => {
-    return VacationDay.find({}).lean();
+const getAllVacationDays = async () => {
+    return await VacationDay.find({}).lean();
 };
 
 const getVacationDayByUserId = (userId) => {

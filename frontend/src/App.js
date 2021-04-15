@@ -11,6 +11,7 @@ import SickDayComponent from './components/SickDay';
 import VacationDay from './components/VacationDay';
 import UserContextProvider from './contexts/UserContext';
 import ErrorBoundary from './error/ErrorBoundary';
+import AdminVacationDay from './components/Admin/AdminVacationDay'
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
             <Route path='/about' exact component={About} />
             <Route path='/login' exact component={LoginComponent} />
             <Route path='/register' exact component={RegisterComponent} />
+            <Route path='/admin/vacationDays' exact component={AdminVacationDay} />
+            {/* <PrivateRoute path='/panel' exact component={ProfileComponent}/> */}
           </Switch>
           <Footer />
         </UserContextProvider>

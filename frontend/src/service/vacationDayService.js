@@ -7,3 +7,12 @@ export const getVacationDaysByUser = (userId) => {
         .then(res => res.json())
         .catch(err => console.log(err.message));
 }
+
+export const getAllVacationDays = () => {
+    return  fetch('http://localhost:8082/api/vacationDay', {
+        method: "GET",
+        headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("AUTH_TOKEN_KEY") }
+    })
+        .then(res => res.json())
+        .catch(err => console.log(err.message));
+}

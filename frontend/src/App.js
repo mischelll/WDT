@@ -11,7 +11,8 @@ import SickDayComponent from './components/SickDay';
 import VacationDay from './components/VacationDay';
 import UserContextProvider from './contexts/UserContext';
 import ErrorBoundary from './error/ErrorBoundary';
-import AdminVacationDay from './components/Admin/AdminVacationDay';
+import AdminVacationDayComponent from './components/Admin/AdminVacationDayComponent';
+import AdminSickDayComponent from './components/Admin/AdminSickDayComponent';
 import NotFoundComponent from './components/404/NotFoundComponent';
 
 function App() {
@@ -31,7 +32,8 @@ function App() {
             <Route path='/about' exact component={About} />
             <Route path='/login' exact component={LoginComponent} />
             <Route path='/register' exact component={RegisterComponent} />
-            <Route path='/admin/vacationDays' exact component={AdminVacationDay} />
+            <Route path='/admin/vacationDays' exact component={AdminVacationDayComponent} />
+            <Route path='/admin/sickDays' exact component={AdminSickDayComponent} />
             <Route path="*" component={NotFoundComponent}></Route>
             {/* <PrivateRoute path='/panel' exact component={ProfileComponent}/> */}
           </Switch>

@@ -7,7 +7,7 @@ const { Logform } = require('winston');
 router.get('/', isAuthenticated, async (req, res) => {
     let mappedDays = [];
     let vacationDays = await vacationDayService.getAllVacationDays();
-    
+
     let newArr = vacationDays.map(async (day) => {
         let user = await userService.getUserUsernameById(day.user);
         day.username = user.username;
@@ -86,13 +86,15 @@ router.post('/', isAuthenticated, (req, res) => {
 router.put('/', isAuthenticated, (req, res) => {
     // 60575ff13c44a92bc8b0e4dd
     const body = req.body;
+    const userId = req.user._id;
 
-    vacationDayService.updateVacationDay(body)
+    vacationDayService.updateVacationDay(body, userId)
         .then(day => {
             res.status(200);
             res.send(day);
         })
         .catch(err => {
+            
             res.status(409);
             res.send({
                 error: err.message,
@@ -104,8 +106,9 @@ router.put('/', isAuthenticated, (req, res) => {
 
 router.delete('/:vacaDay_id', isAuthenticated, (req, res) => {
     const id = req.params['vacaDay_id'];
+    const userId = req.user._id;
 
-    vacationDayService.deleteVacationDay(id)
+    vacationDayService.deleteVacationDay(id, userId)
         .then(day => {
             res.status(200);
             res.send(day);

@@ -5,7 +5,7 @@ const dateUtil = require('../utils/dateUtil');
 
 const createSickDay = (sickDayData, userId) => {
 
-    let { from, to, reason } = sickDayData;
+    let { from, to, reason  } = sickDayData;
 
     if (from > to) {
         return Promise.reject(new Error('From Date cannot be after To Date'));
@@ -21,7 +21,7 @@ const createSickDay = (sickDayData, userId) => {
 
             return Promise.all([
                 User.findOneAndUpdate({ _id: userId }, { $inc: { 'annualSickDaysAllowed': -workingDaysCount } }).exec(),
-                new SickDay({ from, to, reason, user: userId }).save()
+                new SickDay({ from, to, reason, user: userId , missedWorkingDays: workingDaysCount, revenue: user.paymentPerDay * workingDaysCount}).save()
             ]);
         })
         .catch(err => {

@@ -4,6 +4,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useForm } from "react-hook-form"
 import { UserContext } from '../../contexts/UserContext';
 import { getAllVacationDays } from '../../service/vacationDayService';
+import AdminVacationDayRowComponent from '../Admin/AdminVacationDayRowComponent';
 import DatePicker from "react-date-picker";
 import { Popup } from '../Popup/Popup';
 
@@ -99,47 +100,7 @@ export default function VacationDay() {
     return (
         <div>
             <div className={style.reqButtonContainer}>
-                <ReactModal
-                    isOpen={isEditFormVisible}
-                    onRequestClose={() => setEditForm(false)}
-                    contentLabel="Example Modal"
-                    style={customStyles}
-                    ariaHideApp={false}
-                >
-                    <form onSubmit={handleSubmit(onEdit)}>
-                        <h2>Edit working day</h2>
-                        <input type="hidden" id="vacaDayId" name="vacaDayId" ref={register()} />
-                        <label>Start time</label>
-                        <DatePicker
-                            className={style.editForm}
-                            selected={startEditDate}
-                            onChange={date => setstartEditDate(date)}
-                            minDate={addDays(new Date(), 0)}
 
-                        />
-                        <label>End time</label>
-                        <DatePicker
-                            className={style.editForm}
-                            selected={endEditDate}
-                            onChange={date => setendEditDate(date)}
-                            minDate={addDays(startEditDate, 1)}
-                        />
-                        {startEditDate < endEditDate ? <button>Edit</button> : <button disabled>Edit</button>}
-                    </form>
-                </ReactModal>
-
-
-                <ReactModal
-                    isOpen={isDeleteFormVisible}
-                    onRequestClose={() => setDeleteForm(false)}
-                    contentLabel="Example Modal"
-                    style={customStylesDelete}
-                    ariaHideApp={false}
-                >
-                    <h1>Sure you want to delete this? </h1>
-                    <button onClick={handleDelete} >Yes</button>
-                    <button onClick={() => setDeleteForm(false)}>No</button>
-                </ReactModal>
             </div>
             <table className={style.table}>
                 <thead className={style.tableHead}>
@@ -167,32 +128,8 @@ export default function VacationDay() {
 
     function mapVacationDays() {
         if (vacationDays.length > 0) {
-            return vacationDays.map(x =>
-                <tr key={x._id}>
-                    <td>{x.from.substring(0, 10)}</td>
-                    <td>{x.to.substring(0, 10)}</td>
-                    <td>4</td>
-                    <td>{x.username}</td>
-                    <td>{x.status}</td>
-
-                    {function f() {
-                        return x.status === 'pending' ?
-                            <td><button onClick={() => setEditForm(true)} className={style.editDayButton}><span>Edit</span></button></td> :
-                            x.status === 'approved' ?
-                                <td><Popup info="tick" /></td>
-                                :
-                                <td><Popup info="info" /></td>
-                    }()}
-
-                    {function f() {
-                        return x.status === 'pending' ?
-                            <td><button onClick={() => setDeleteForm(true)} className={style.deleteDayButton}><span>Delete</span></button></td>
-                            :
-                            <td>-</td>
-                    }()}
-
-
-                </tr>
+            return vacationDays.map(vacationDay =>
+                <AdminVacationDayRowComponent vacationDay={vacationDay} />
             );
         } else {
             return <h2>No vacation days</h2>

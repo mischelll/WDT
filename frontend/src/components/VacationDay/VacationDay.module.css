@@ -134,6 +134,46 @@
   right: 0;
 }
 
+.manageButton{
+  background-color: #1a1ee0; /* Green */
+  border: none;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-align: left;
+  outline: none;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.manageButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.manageButton span:after {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.manageButton:hover span {
+  padding-right: 3.5px;
+  padding-left: 3.5px;
+}
+
+.manageButton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
 .table {
   background: #368eac;
   border-radius: 0.25em;

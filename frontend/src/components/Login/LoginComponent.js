@@ -2,7 +2,6 @@ import style from './LoginComponent.module.css'
 import React, { useState, useContext } from 'react';
 import { useHistory, } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { login, getAdmin } from '../../service/authService';
 import { UserContext } from '../../contexts/UserContext';
 
 export default function LoginComponent() {

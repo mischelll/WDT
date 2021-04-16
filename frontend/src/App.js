@@ -14,6 +14,7 @@ import ErrorBoundary from './error/ErrorBoundary';
 import AdminVacationDayComponent from './components/Admin/AdminVacationDayComponent';
 import AdminSickDayComponent from './components/Admin/AdminSickDayComponent';
 import NotFoundComponent from './components/404/NotFoundComponent';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
@@ -24,16 +25,16 @@ function App() {
           <Switch>
             <Route path='/home' exact component={HomeComponent} />
             <Route path='/' exact component={HomeComponent} />
-            <Route path='/sickDays' exact component={SickDayComponent} />
-            <Route path='/vacationDays' exact component={VacationDay} />
-            <Route path='/user/profile/' component={ProfileComponent} />
-            <Route path='/auth/register' exact component={HomeComponent} />
-            <Route path='/auth/login' exact component={HomeComponent} />
+            <PrivateRoute path='/sickDays' exact component={SickDayComponent} />
+            <PrivateRoute path='/vacationDays' exact component={VacationDay} />
+            <PrivateRoute path='/user/profile/' component={ProfileComponent} />
+            {/* <Route path='/auth/register' exact component={HomeComponent} />
+            <Route path='/auth/login' exact component={HomeComponent} /> */}
             <Route path='/about' exact component={About} />
             <Route path='/login' exact component={LoginComponent} />
             <Route path='/register' exact component={RegisterComponent} />
-            <Route path='/admin/vacationDays' exact component={AdminVacationDayComponent} />
-            <Route path='/admin/sickDays' exact component={AdminSickDayComponent} />
+            <PrivateRoute path='/admin/vacationDays' exact component={AdminVacationDayComponent} />
+            <PrivateRoute path='/admin/sickDays' exact component={AdminSickDayComponent} />
             <Route path="*" component={NotFoundComponent}></Route>
             {/* <PrivateRoute path='/panel' exact component={ProfileComponent}/> */}
           </Switch>

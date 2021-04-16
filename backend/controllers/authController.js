@@ -28,6 +28,7 @@ router.post('/register', isGuest, (req, res) => {
     authService.register(req.body)
         .then(token => {
             res.status(201);
+            res.send({ successfullMessage: "Successfull registration", code: 200 })
         })
         .catch(err => {
             console.log(err);

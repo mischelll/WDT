@@ -10,13 +10,13 @@ export const signup = (registerData) => {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             if (data) {
                 return Promise.reject(data);
             }
+            return data;
         })
         .catch(err => {
-            throw err;
+            return err;
         });
 }
 
@@ -34,7 +34,9 @@ export const login = (loginData) => {
             sessionStorage.setItem("AUTH_TOKEN_KEY", token.id_token);
             return token;
         })
-        .catch(err => console.log(err.message));
+        .catch(err => {
+            return err
+        });
 }
 
 export const getAdmin = () => {

@@ -8,7 +8,7 @@ const { SECRET } = require('../config/config');
 function register(userData) {
     console.log(userData);
 
-    let { username, password, repeatPassword, annualVacationDaysAllowed, annualSickDaysAllowed, email } = userData;
+    let { username, password, repeatPassword, annualVacationDaysAllowed, annualSickDaysAllowed, email, paymentPerDay } = userData;
 
     return User.findOne().or([{ username: username }, { email: email }])
         .exec()
@@ -27,6 +27,19 @@ function register(userData) {
                 errorMessages.push({ errorMessage: "Email should be unique" })
             }
 
+            if(!annualVacationDaysAllowed){
+                errorMessages.push({ errorMessage: "Annual Vacation days must be at least 1" })
+            }
+
+            if(!annualSickDaysAllowed){
+                errorMessages.push({ errorMessage: "Annual Sick days must be at least 1" })
+            }
+
+            console.log(+paymentPerDay > 31);
+            console.log(paymentPerDay === '');
+            if(paymentPerDay === '' || Number(paymentPerDay) <= 31.00){
+                errorMessages.push({ errorMessage: "Payment per day cannot be less than 31 leva" })
+            }
             if (errorMessages.length > 0) {
                 return Promise.reject(errorMessages);
             }

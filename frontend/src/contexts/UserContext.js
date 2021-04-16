@@ -48,7 +48,12 @@ export default class UserContextProvider extends Component {
     }
 
     handleLoginClick(data) {
-        login(data).then(token => {
+       return login(data)
+       .then(token => {
+            if(token.hasOwnProperty('message')){
+                throw Error(token.message)
+            }
+
             if (token.id_token) {
                 Promise.resolve(getUserInfo())
                     .then(data => {

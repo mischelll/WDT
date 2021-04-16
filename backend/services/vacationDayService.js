@@ -75,11 +75,11 @@ const updateVacationDay = (vacationDayData, userId) => {
 
 
 const getAllVacationDays = async () => {
-    return await VacationDay.find({}).sort({ from: 'ascending', to: 'ascending' }).lean();
+    return await VacationDay.find({}).sort({ from: 'descending', to: 'descending' }).lean();
 };
 
 const getVacationDayByUserId = (userId) => {
-    return VacationDay.find({ user: userId }).lean();
+    return VacationDay.find({ user: userId }).sort({ from: 'descending', to: 'descending' }).lean();
 };
 
 const getVacationDayById = (vacationDayId) => {

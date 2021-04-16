@@ -24,7 +24,6 @@ const createSickDay = (sickDayData, userId) => {
             }
 
             return Promise.all([
-                User.findOneAndUpdate({ _id: userId }, { $inc: { 'annualSickDaysAllowed': -workingDaysCount } }).exec(),
                 new SickDay({ from, to, reason, user: userId , missedWorkingDays: workingDaysCount, revenue: user.paymentPerDay * workingDaysCount}).save()
             ]);
         })
@@ -34,11 +33,11 @@ const createSickDay = (sickDayData, userId) => {
 };
 
 const getAllSickDays = async () => {
-    return await SickDay.find({}).sort({from:'ascending',to:'ascending'}).lean();
+    return await SickDay.find({}).sort({from:'descending',to:'descending'}).lean();
 };
 
 const getSickDaysByUserId = (userId) => {
-    return SickDay.find({ user: userId }).lean();
+    return SickDay.find({ user: userId }).sort({ from: 'descending', to: 'descending' }).lean();
 }
 
 const updateSickDay = (sickDayData) => {

@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form"
 import { UserContext } from '../../contexts/UserContext';
 import { getVacationDaysByUser } from '../../service/vacationDayService';
 import DatePicker from "react-date-picker";
-import { Popup } from '../Popup/Popup';
 import VacationDayRow from './VacationDaysRow';
 
 export default function VacationDay() {
@@ -78,6 +77,7 @@ export default function VacationDay() {
 
 
     function closeModal() {
+        console.log('jkhbjk');
         setRequestDayForm(false)
         setError("");
     }

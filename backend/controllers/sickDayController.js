@@ -48,8 +48,9 @@ router.get('/user/:userId', isAuthenticated, (req, res) => {
 router.post('/', isAuthenticated, (req, res) => {
     sickDayService.createSickDay(req.body, req.user._id)
         .then(sickDay => {
+            console.log(sickDay);
             res.status(201);
-            res.send(sickDay[1])
+            res.send(sickDay)
         })
         .catch(err => {
             res.status(409);

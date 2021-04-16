@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { Popup } from '../Popup/Popup';
 import DatePicker from "react-date-picker";
 
-export default function VacationDaysRow({ vacationDay }) {
+export default function VacationDaysRow({ vacationDay, vacationDays }) {
     const [isEditFormVisible, setEditForm] = useState(false);
     const [isDeleteFormVisible, setDeleteForm] = useState(false);
     const [startEditDate, setstartEditDate] = useState(new Date());
@@ -58,11 +58,13 @@ export default function VacationDaysRow({ vacationDay }) {
         })
             .then(data => data.json())
             .then(day => {
+                console.log(day);
                 if (Object.hasOwnProperty('error')) {
                     setError(day.error);
                     console.log(error);
                     console.log(day);
                 } else {
+                   
                     closeDeleteModal();
                 }
             })

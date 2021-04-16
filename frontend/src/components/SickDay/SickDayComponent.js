@@ -32,7 +32,7 @@ export default function SickDayComponent() {
 
         startDate.setDate(startDate.getDate() + 1)
         endDate.setDate(endDate.getDate() + 1)
-
+console.log('kj.hkjh');
         fetch('http://localhost:8082/api/sickDay', {
             method: "POST",
             headers: {
@@ -50,6 +50,7 @@ export default function SickDayComponent() {
         })
             .then(data => data.json())
             .then(day => {
+                console.log(day);
                 if (day.hasOwnProperty('error')) {
                     setError(day.error);
                     console.log(error);
@@ -62,6 +63,7 @@ export default function SickDayComponent() {
     }
 
     function closeModal() {
+        console.log('kjhkjh');
         setRequestDayForm(false)
         setError("");
     }
@@ -134,7 +136,7 @@ export default function SickDayComponent() {
                         <th>From</th>
                         <th>To</th>
                         <th>Reason</th>
-                        <th>Missed working days</th>
+                        <th>Status</th>
                         <th>Revenue</th>
                     </tr>
                 </thead>

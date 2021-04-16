@@ -12,6 +12,7 @@ export default function VacationDaysRow({ vacationDay }) {
     const [endEditDate, setendEditDate] = useState(new Date());
     const { register, handleSubmit, errors } = useForm();
     const [isManageFormVisible, setManageForm] = useState(false);
+    const [error, setError] = useState("");
 
     function onEdit(data) {
         console.log(data);
@@ -109,7 +110,13 @@ export default function VacationDaysRow({ vacationDay }) {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if (Object.hasOwnProperty('error')) {
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                } else {
+                    closeManageModal();
+                }
             })
             .catch(e => e.message);
     }
@@ -132,9 +139,20 @@ export default function VacationDaysRow({ vacationDay }) {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if (Object.hasOwnProperty('error')) {
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                } else {
+                    closeManageModal();
+                }
             })
             .catch(e => e.message);
+    }
+
+    function closeManageModal(){
+        setManageForm(false);
+        setError("")
     }
 
     return (

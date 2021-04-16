@@ -15,6 +15,8 @@ import AdminVacationDayComponent from './components/Admin/AdminVacationDayCompon
 import AdminSickDayComponent from './components/Admin/AdminSickDayComponent';
 import NotFoundComponent from './components/404/NotFoundComponent';
 import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
+import LogOutComponent from './components/LogOutComponent';
 
 function App() {
   return (
@@ -23,16 +25,17 @@ function App() {
         <UserContextProvider>
           <Header />
           <Switch>
-            <Route path='/home' exact component={HomeComponent} />
-            <Route path='/' exact component={HomeComponent} />
+            <PublicRoute path='/home' exact component={HomeComponent} />
+            <PublicRoute path='/' exact component={HomeComponent} />
             <PrivateRoute path='/sickDays' exact component={SickDayComponent} />
             <PrivateRoute path='/vacationDays' exact component={VacationDay} />
             <PrivateRoute path='/user/profile/' component={ProfileComponent} />
             {/* <Route path='/auth/register' exact component={HomeComponent} />
             <Route path='/auth/login' exact component={HomeComponent} /> */}
-            <Route path='/about' exact component={About} />
-            <Route path='/login' exact component={LoginComponent} />
-            <Route path='/register' exact component={RegisterComponent} />
+            <PublicRoute path='/about' exact component={About} />
+            <PublicRoute restricted={true} path='/login' exact component={LoginComponent} />
+            <PublicRoute restricted={true} path='/register' exact component={RegisterComponent} />
+            <PublicRoute restricted={true} path='/logout' exact component={LogOutComponent} />
             <PrivateRoute path='/admin/vacationDays' exact component={AdminVacationDayComponent} />
             <PrivateRoute path='/admin/sickDays' exact component={AdminSickDayComponent} />
             <Route path="*" component={NotFoundComponent}></Route>

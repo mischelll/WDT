@@ -47,7 +47,7 @@ export default function VacationDay() {
         })
             .then(data => data.json())
             .then(day => {
-                if(Object.hasOwnProperty('error')){
+                if(day.hasOwnProperty('error')){
                     setError(day.error);
                     console.log(error);
                     console.log(day);

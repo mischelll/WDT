@@ -125,8 +125,8 @@ export default function VacationDay() {
                     <tr>
                         <td></td>
                         <td></td>
-                        <td>16 missed Wds</td>
-                        <td>1234 $ in revenue</td>
+                        <td>{vacationDays.map(x => x.missedWorkingDays).reduce((a, b) => a + b, 0)} missed working days</td>
+                        <td>{vacationDays.map(x => x.revenue).reduce((a, b) => a + b, 0)} $ in revenue</td>
                     </tr>
                 </tfoot>
             </table>

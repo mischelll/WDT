@@ -95,8 +95,8 @@ export default function VacationDaysRow({ vacationDay }) {
         <tr key={vacationDay._id}>
             <td>{vacationDay.from.substring(0, 10)}</td>
             <td>{vacationDay.to.substring(0, 10)}</td>
-            <td>4</td>
-            <td>395 $</td>
+            <td>{vacationDay.missedWorkingDays}</td>
+            <td>{vacationDay.revenue} $</td>
             <td>{vacationDay.status}</td>
 
             {function f() {

@@ -19,7 +19,8 @@ export default function SickDayComponent() {
     const [endDate, setEndDate] = useState(new Date());
     const [startEditDate, setstartEditDate] = useState(new Date());
     const [endEditDate, setendEditDate] = useState(new Date());
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit } = useForm();
+    const [error, setError] = useState({});
 
     useEffect(() => {
         if (currentUser._id) {
@@ -58,35 +59,6 @@ export default function SickDayComponent() {
             .catch(e => e.message);
     }
 
-    function onEdit(data) {
-        console.log(data);
-
-        startEditDate.setDate(startEditDate.getDate() + 1)
-        endEditDate.setDate(endEditDate.getDate() + 1)
-        fetch('http://localhost:8082/api/sickDay', {
-            method: "PUT",
-            headers: {
-                'Authorization': 'Bearer ' + sessionStorage.getItem("AUTH_TOKEN_KEY"),
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    "_id": data.sickDayId,
-                    "from": startEditDate?.toISOString().slice(0, 10),
-                    "to": endEditDate?.toISOString().slice(0, 10),
-                    "reason": data.reason
-                }
-            )
-        })
-            .then(data => data.json())
-            .then(day => {
-                console.log(day);
-            })
-            .catch(e => e.message);
-    }
-
-   
 
     function addDays(date, daysToAdd) {
 
@@ -108,7 +80,7 @@ export default function SickDayComponent() {
         }
     };
 
-    
+
 
     return (
         <div>
@@ -142,10 +114,11 @@ export default function SickDayComponent() {
                     />
                     <textarea name="reason" ref={register}></textarea>
                     <button>Request</button>
+                    {error && <><p></p></>}
                 </form>
             </ReactModal>
 
-           
+
             <table className={style.tableBody}>
                 <thead className={style.tableHead}>
                     <tr>
@@ -166,7 +139,7 @@ export default function SickDayComponent() {
     function mapSickDays() {
         if (sickDays.length > 0) {
             return sickDays.map(x =>
-                <SickDayRow sickDay={x} />
+                <SickDayRow key={x._id} sickDay={x} />
             );
         } else {
             return <h2>No sick days</h2>

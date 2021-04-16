@@ -17,7 +17,13 @@ router.put('/vacationDay/:id', isAuthenticated, isAdmin, (req, res) => {
 });
 
 router.put('/sickDay/:id', isAdmin, (req, res) => {
-
+    adminService.changeStatusOfSickDay(req.body.status, req.params['id'])
+    .then(day => {
+        res.status(200);
+        res.send({ message: 'Successfull status update of sick day', status: 200, time: new Date().toISOString(), body: day[1] })
+        console.log(day);
+    })
+    .catch(err => console.log(err.message));
 });
 
 module.exports = router;

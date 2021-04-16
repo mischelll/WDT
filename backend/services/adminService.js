@@ -33,10 +33,35 @@ const changeStatusOfVacationDay = (status, id) => {
 }
 
 const changeStatusOfSickDay = (status, id) => {
-
+    if (status === 'approved') {
+        return SickDay.findOne({ _id: id })
+            .then(sickDay => {
+                let workingDaysCount = dateUtil.calculateNumberOfWorkingDays(sickDay.from, sickDay.to);
+                console.log(sickDay);
+                return Promise.all(
+                    [
+                        User.findOneAndUpdate({ _id: sickDay.user },
+                            { $inc: { 'annualSickDaysAllowed': -workingDaysCount } }, {
+                            new: true
+                        })
+                            .exec(),
+                            SickDay.findOneAndUpdate({ _id: id }, { status: status }, {
+                            new: true
+                        })
+                            .exec()
+                    ])
+            })
+            .catch(err => console.log('wut ' + err.message));
+    } else if (status === 'declined') {
+        return SickDay.findOneAndUpdate({ _id: id }, { status: status }, {
+            new: true
+        })
+            .exec();
+    }
 }
 
 
 module.exports = {
     changeStatusOfVacationDay,
+    changeStatusOfSickDay
 }

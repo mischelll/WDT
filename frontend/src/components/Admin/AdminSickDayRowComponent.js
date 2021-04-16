@@ -83,13 +83,52 @@ export default function AdminSickDayRowComponent({ sickDay }) {
         console.log(e);
     }
 
-    function handleApproval(e) {
+    function handleApproval(sickDayId) {
+        console.log(sickDayId);
+        fetch('http://localhost:8082/api/admin/sickDay/' + sickDayId, {
+            method: "PUT",
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem("AUTH_TOKEN_KEY"),
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    "status": 'approved'
+                }
+            )
 
+        })
+            .then(data => data.json())
+            .then(day => {
+                console.log(day);
+            })
+            .catch(e => e.message);
     }
 
-    function handleDecline(e) {
+    function handleDecline(sickDayId) {
+        console.log(sickDayId);
+        fetch('http://localhost:8082/api/admin/vacationDay/' + sickDayId, {
+            method: "PUT",
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem("AUTH_TOKEN_KEY"),
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    "status": 'declined'
+                }
+            )
 
+        })
+            .then(data => data.json())
+            .then(day => {
+                console.log(day);
+            })
+            .catch(e => e.message);
     }
+
     return (
         <tr key={sickDay._id}>
             <td>{sickDay.from.substring(0, 10)}</td>
@@ -179,8 +218,8 @@ export default function AdminSickDayRowComponent({ sickDay }) {
                 ariaHideApp={false}
             >
                 <h1>Choose how to manage this period: </h1>
-                <button onClick={handleApproval} >Approve</button>
-                <button onClick={handleDecline} >Decline</button><br /><br />
+                <button onClick={() => handleApproval(sickDay._id)}>Approve</button>
+                <button onClick={() => handleDecline(sickDay._id)} >Decline</button><br /><br />
                 <button onClick={() => setManageForm(false)}>Close</button>
             </ReactModal>
 
@@ -191,7 +230,7 @@ export default function AdminSickDayRowComponent({ sickDay }) {
                 style={customStylesDelete}
                 ariaHideApp={false}
             >
-                <h1>Reason for the period from {sickDay.from.substring(0, 10)} to {sickDay.to.substring(0, 10)} by {(sickDay.username)}: </h1><br/>
+                <h1>Reason for the period from {sickDay.from.substring(0, 10)} to {sickDay.to.substring(0, 10)} by {(sickDay.username)}: </h1><br />
                 <p> - {sickDay.reason}</p><br />
                 <button onClick={() => setReasonModal(false)}>Close</button>
             </ReactModal>

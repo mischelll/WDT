@@ -27,6 +27,16 @@ const sickDaySchema = new Schema({
         enum: ['approved', 'pending'],
         default: 'pending'
     },
+    
+    missedWorkingDays: {
+        type: Number,
+        default: 0
+    },
+
+    revenue: {
+        type: Number,
+        default: 0
+    },
 
     user: {
         type: mongoose.Types.ObjectId,

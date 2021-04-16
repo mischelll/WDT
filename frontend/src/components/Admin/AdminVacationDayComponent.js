@@ -1,24 +1,13 @@
 import style from '../VacationDay/VacationDay.module.css'
-import ReactModal from 'react-modal';
 import React, { useEffect, useState, useContext } from 'react';
-import { useForm } from "react-hook-form"
 import { UserContext } from '../../contexts/UserContext';
 import { getAllVacationDays } from '../../service/vacationDayService';
 import AdminVacationDayRowComponent from '../Admin/AdminVacationDayRowComponent';
-import DatePicker from "react-date-picker";
-import { Popup } from '../Popup/Popup';
 
 export default function VacationDay() {
     const { currentUser } = useContext(UserContext);
     const [vacationDays, setVacationDays] = useState([]);
-    const [isEditFormVisible, setEditForm] = useState(false);
-    const [isDeleteFormVisible, setDeleteForm] = useState(false);
-    const [isRequestDayFormVisible, setRequestDayForm] = useState(false);
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    const [startEditDate, setstartEditDate] = useState(new Date());
-    const [endEditDate, setendEditDate] = useState(new Date());
-    const { register, handleSubmit, errors } = useForm();
+
 
     useEffect(() => {
         if (currentUser._id) {
@@ -28,74 +17,6 @@ export default function VacationDay() {
                 })
         }
     }, [setVacationDays, currentUser._id]);
-
-
-
-    function onEdit(data) {
-        console.log(data);
-
-        startEditDate.setDate(startEditDate.getDate() + 1)
-        endEditDate.setDate(endEditDate.getDate() + 1)
-        fetch('http://localhost:8082/api/vacationDay', {
-            method: "PUT",
-            headers: {
-                'Authorization': 'Bearer ' + sessionStorage.getItem("AUTH_TOKEN_KEY"),
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    "_id": data.vacaDayId,
-                    "from": startEditDate?.toISOString().slice(0, 10),
-                    "to": endEditDate?.toISOString().slice(0, 10)
-                }
-            )
-        })
-            .then(data => data.json())
-            .then(day => {
-                console.log(day);
-            })
-            .catch(e => e.message);
-    }
-
-    const customStyles = {
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)'
-        },
-        overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.2)",
-
-        }
-    };
-
-    const customStylesDelete = {
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)'
-        },
-        overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.2)",
-
-        }
-    };
-
-    function addDays(date, daysToAdd) {
-
-        return new Date(date?.getFullYear(), date?.getMonth(), date?.getDate() + daysToAdd)
-    }
-
-    function handleDelete(e) {
-        console.log(e);
-    }
 
     return (
         <div>
@@ -117,9 +38,12 @@ export default function VacationDay() {
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td>16 missed Wds</td>
+                        <td>Count of pending periods: {vacationDays.filter(x => x.status === 'pending').length}</td>
+                        <td>Count of approved periods: {vacationDays.filter(x => x.status === 'approved').length} </td>
+                        <td>Count of declined periods: {vacationDays.filter(x => x.status === 'declined').length}</td>
+                        <td>Most requested periods by: {vacationDays.map(x => x.username).sort((a, b) =>
+                            vacationDays.filter(v => v === a).length - vacationDays.filter(v => v === b).length).pop()}
+                            </td>
                     </tr>
                 </tfoot>
             </table>

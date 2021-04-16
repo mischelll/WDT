@@ -16,6 +16,16 @@ const vacationDaySchema = new Schema({
         required: [true, 'Vacation day: to cannot be empty!'],
     },
 
+    missedWorkingDays: {
+        type: Number,
+        default: 0
+    },
+
+    revenue: {
+        type: Number,
+        default: 0
+    },
+
     status: {
         type: String,
         enum: ['approved', 'pending', 'declined'],

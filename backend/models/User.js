@@ -44,6 +44,11 @@ const userSchema = new Schema({
         }
     },
 
+    paymentPerDay: {
+        type:Number,
+        default: 31.36
+    },
+    
     roles: [{
         type: mongoose.Types.ObjectId,
         ref: 'Role'

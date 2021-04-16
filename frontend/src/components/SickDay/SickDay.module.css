@@ -163,3 +163,12 @@ tbody tr:hover {
   background: #014055;
 }
 
+.errorMessage{
+  color: #e2502c;
+}
+
+.reqHeading{
+  color: black;
+}
+
+

@@ -9,9 +9,7 @@ export default function SickDayRow({ sickDay }) {
 
     const [isEditFormVisible, setEditForm] = useState(false);
     const [isDeleteFormVisible, setDeleteForm] = useState(false);
-
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [error, setError] = useState("");
     const [startEditDate, setstartEditDate] = useState(new Date());
     const [endEditDate, setendEditDate] = useState(new Date());
     const { register, handleSubmit, errors } = useForm();
@@ -39,9 +37,20 @@ export default function SickDayRow({ sickDay }) {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if (day.hasOwnProperty('error')) {
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                } else {
+                    closeModal();
+                }
             })
             .catch(e => e.message);
+    }
+
+    function closeModal() {
+        setEditForm(false)
+        setError("");
     }
 
     function handleDelete(sickDayId) {
@@ -56,7 +65,13 @@ export default function SickDayRow({ sickDay }) {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if (day.hasOwnProperty('error')) {
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                } else {
+                    closeModal();
+                }
             })
             .catch(e => e.message);
     }

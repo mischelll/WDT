@@ -47,14 +47,14 @@ export default function VacationDay() {
         })
             .then(data => data.json())
             .then(day => {
-                if(day.hasOwnProperty('error')){
+                if (day.hasOwnProperty('error')) {
                     setError(day.error);
                     console.log(error);
                     console.log(day);
-                }else{
+                } else {
                     closeModal();
                 }
-               
+
             })
             .catch(e => {
                 console.log(e.message);
@@ -104,7 +104,8 @@ export default function VacationDay() {
                             <>
                                 <p className={style.errorMessage}>{error}</p>
 
-                            </>}
+                            </>
+                        }
                         <h2>Request vacation period</h2>
                         <label >Start time</label>
                         <DatePicker

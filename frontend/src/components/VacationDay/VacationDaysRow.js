@@ -35,7 +35,13 @@ export default function VacationDaysRow({ vacationDay }) {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if (day.hasOwnProperty('error')) {
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                } else {
+                    closeModal()
+                }
             })
             .catch(e => e.message);
     }
@@ -48,15 +54,15 @@ export default function VacationDaysRow({ vacationDay }) {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            
+
         })
             .then(data => data.json())
             .then(day => {
-                if(Object.hasOwnProperty('error')){
+                if (Object.hasOwnProperty('error')) {
                     setError(day.error);
                     console.log(error);
                     console.log(day);
-                }else{
+                } else {
                     closeDeleteModal();
                 }
             })
@@ -72,7 +78,7 @@ export default function VacationDaysRow({ vacationDay }) {
         setError("");
     }
 
-    function closeDeleteModal(){
+    function closeDeleteModal() {
         setDeleteForm(false);
     }
 
@@ -152,6 +158,12 @@ export default function VacationDaysRow({ vacationDay }) {
                 ariaHideApp={false}
             >
                 <form onSubmit={handleSubmit(onEdit)}>
+                    {error &&
+                        <>
+                            <p className={style.errorMessage}>{error}</p>
+
+                        </>
+                    }
                     <h2>Edit working day</h2>
                     <input type="hidden" id="vacaDayId" name="vacaDayId" value={vacationDay._id} ref={register()} />
                     <label>Start time</label>
@@ -160,7 +172,7 @@ export default function VacationDaysRow({ vacationDay }) {
                         selected={startEditDate}
                         onChange={date => setstartEditDate(date)}
                         minDate={addDays(new Date(), 0)}
-                        
+
                     />
                     <label>End time</label>
                     <DatePicker

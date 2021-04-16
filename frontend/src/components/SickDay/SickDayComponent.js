@@ -12,15 +12,11 @@ export default function SickDayComponent() {
     const { currentUser } = useContext(UserContext);
     const [sickDays, setSickDays] = useState([]);
     const [revenue, setRevenue] = useState();
-    const [isEditFormVisible, setEditForm] = useState(false);
-    const [isDeleteFormVisible, setDeleteForm] = useState(false);
     const [isRequestDayFormVisible, setRequestDayForm] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const [startEditDate, setstartEditDate] = useState(new Date());
-    const [endEditDate, setendEditDate] = useState(new Date());
     const { register, handleSubmit } = useForm();
-    const [error, setError] = useState({});
+    const [error, setError] = useState("");
 
     useEffect(() => {
         if (currentUser._id) {
@@ -54,11 +50,21 @@ export default function SickDayComponent() {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if (day.hasOwnProperty('error')) {
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                } else {
+                    closeModal();
+                }
             })
             .catch(e => e.message);
     }
 
+    function closeModal() {
+        setRequestDayForm(false)
+        setError("");
+    }
 
     function addDays(date, daysToAdd) {
 
@@ -76,26 +82,29 @@ export default function SickDayComponent() {
         },
         overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.2)",
-
         }
     };
-
-
 
     return (
         <div>
             <button className={style.requestSickDaysButton} onClick={() => setRequestDayForm(true)}>+ Request new sick days</button>
             <ReactModal
                 isOpen={isRequestDayFormVisible}
-                onRequestClose={() => setRequestDayForm(false)}
+                onRequestClose={() => closeModal()}
                 contentLabel="Example Modal"
                 style={customStyles}
                 ariaHideApp={false}
             >
 
                 <form className={style.editForm} onSubmit={handleSubmit(onSubmit)}>
-                    <h2>Request vacation period</h2>
-                    <label >Start time</label>
+                    {error &&
+                        <>
+                            <p className={style.errorMessage}>{error}</p>
+
+                        </>
+                    }
+                    <h2 className={style.reqHeading}>Request sick days period</h2>
+                    <label className={style.reqHeading}>Start time</label>
                     <DatePicker
                         className={style.editForm}
                         selected={startDate}
@@ -104,7 +113,7 @@ export default function SickDayComponent() {
 
                     />
 
-                    <label>End time</label>
+                    <label className={style.reqHeading}>End time</label>
                     <DatePicker
                         className={style.editForm}
                         selected={endDate + 1}

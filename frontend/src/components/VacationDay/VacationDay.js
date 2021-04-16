@@ -15,6 +15,7 @@ export default function VacationDay() {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const { handleSubmit } = useForm();
+    const [error, setError] = useState("");
 
     useEffect(() => {
         if (currentUser._id) {
@@ -46,9 +47,18 @@ export default function VacationDay() {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if(Object.hasOwnProperty('error')){
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                }else{
+                    closeModal();
+                }
+               
             })
-            .catch(e => e.message);
+            .catch(e => {
+                console.log(e.message);
+            });
     }
 
     const customStyles = {
@@ -66,6 +76,12 @@ export default function VacationDay() {
         }
     };
 
+
+    function closeModal() {
+        setRequestDayForm(false)
+        setError("");
+    }
+
     function addDays(date, daysToAdd) {
 
         return new Date(date?.getFullYear(), date?.getMonth(), date?.getDate() + daysToAdd)
@@ -77,13 +93,18 @@ export default function VacationDay() {
                 <button onClick={() => setRequestDayForm(true)} className={style.requestVacaDaysButton}><span>+ Request new vacation period</span></button>
                 <ReactModal
                     isOpen={isRequestDayFormVisible}
-                    onRequestClose={() => setRequestDayForm(false)}
+                    onRequestClose={() => closeModal()}
                     contentLabel="Example Modal"
                     style={customStyles}
                     ariaHideApp={false}
                 >
 
                     <form className={style.editForm} onSubmit={handleSubmit(onSubmit)}>
+                        {error &&
+                            <>
+                                <p className={style.errorMessage}>{error}</p>
+
+                            </>}
                         <h2>Request vacation period</h2>
                         <label >Start time</label>
                         <DatePicker
@@ -103,6 +124,7 @@ export default function VacationDay() {
                             isClearable={true}
                         />
                         <button>Request</button>
+
                     </form>
                 </ReactModal>
 
@@ -136,7 +158,7 @@ export default function VacationDay() {
     function mapVacationDays() {
         if (vacationDays.length > 0) {
             return vacationDays.map(x =>
-                <VacationDayRow vacationDay={x} />
+                <VacationDayRow key={x._id} vacationDay={x} />
             );
         } else {
             return <h2>No vacation days</h2>

@@ -11,6 +11,7 @@ export default function VacationDaysRow({ vacationDay }) {
     const [startEditDate, setstartEditDate] = useState(new Date());
     const [endEditDate, setendEditDate] = useState(new Date());
     const { register, handleSubmit, errors } = useForm();
+    const [error, setError] = useState("");
 
     function onEdit(data) {
         console.log(data);
@@ -51,13 +52,28 @@ export default function VacationDaysRow({ vacationDay }) {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if(Object.hasOwnProperty('error')){
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                }else{
+                    closeDeleteModal();
+                }
             })
             .catch(e => e.message);
     }
 
     function addDays(date, daysToAdd) {
         return new Date(date?.getFullYear(), date?.getMonth(), date?.getDate() + daysToAdd)
+    }
+
+    function closeModal() {
+        setEditForm(false)
+        setError("");
+    }
+
+    function closeDeleteModal(){
+        setDeleteForm(false);
     }
 
     const customStyles = {
@@ -130,7 +146,7 @@ export default function VacationDaysRow({ vacationDay }) {
 
             <ReactModal
                 isOpen={isEditFormVisible}
-                onRequestClose={() => setEditForm(false)}
+                onRequestClose={() => closeModal()}
                 contentLabel="Example Modal"
                 style={customStyles}
                 ariaHideApp={false}
@@ -144,7 +160,7 @@ export default function VacationDaysRow({ vacationDay }) {
                         selected={startEditDate}
                         onChange={date => setstartEditDate(date)}
                         minDate={addDays(new Date(), 0)}
-
+                        
                     />
                     <label>End time</label>
                     <DatePicker

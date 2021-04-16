@@ -144,7 +144,13 @@ export default function SickDayRow({ sickDay }) {
                 ariaHideApp={false}
             >
                 <form onSubmit={handleSubmit(onEdit)}>
-                    <h2>Edit working day</h2>
+                    {error &&
+                        <>
+                            <p className={style.errorMessage}>{error}</p>
+
+                        </>
+                    }
+                    <h2>Edit sick day</h2>
                     <input type="hidden" id="sickDayId" name="sickDayId" value={sickDay._id} ref={register()} />
                     <label>Start time</label>
                     <DatePicker

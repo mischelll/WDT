@@ -43,6 +43,11 @@ const getSickDaysByUserId = (userId) => {
 const updateSickDay = (sickDayData) => {
     let { _id, from, to, reason } = sickDayData;
 
+
+    if(!reason || reason === ''){
+        return Promise.reject(new Error('Reason cannot be empty'));
+    }
+    
     if (from > to) {
         return Promise.reject(new Error('From Date cannot be after To Date'));
     }

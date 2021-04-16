@@ -15,6 +15,7 @@ export default function AdminSickDayRowComponent({ sickDay }) {
     const [startEditDate, setstartEditDate] = useState(new Date());
     const [endEditDate, setendEditDate] = useState(new Date());
     const { register, handleSubmit, errors } = useForm();
+    const [error, setError] = useState("");
 
     function addDays(date, daysToAdd) {
 
@@ -79,8 +80,27 @@ export default function AdminSickDayRowComponent({ sickDay }) {
             .catch(e => e.message);
     }
 
-    function handleDelete(e) {
-        console.log(e);
+    function handleDelete(sickDayId) {
+        fetch('http://localhost:8082/api/sickDay/' + sickDayId, {
+            method: "DELETE",
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem("AUTH_TOKEN_KEY"),
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+
+        })
+            .then(data => data.json())
+            .then(day => {
+                if (Object.hasOwnProperty('error')) {
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                } else {
+                    setDeleteForm(false)
+                }
+            })
+            .catch(e => e.message);
     }
 
     function handleApproval(sickDayId) {
@@ -101,7 +121,13 @@ export default function AdminSickDayRowComponent({ sickDay }) {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if (Object.hasOwnProperty('error')) {
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                } else {
+                    closeManageModal();
+                }
             })
             .catch(e => e.message);
     }
@@ -124,9 +150,20 @@ export default function AdminSickDayRowComponent({ sickDay }) {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if (Object.hasOwnProperty('error')) {
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                } else {
+                    closeManageModal();
+                }
             })
             .catch(e => e.message);
+    }
+
+    function closeManageModal(){
+        setManageForm(false);
+        setError("");
     }
 
     return (
@@ -206,7 +243,7 @@ export default function AdminSickDayRowComponent({ sickDay }) {
                 ariaHideApp={false}
             >
                 <h1>Sure you want to delete this? </h1>
-                <button onClick={handleDelete} >Yes</button>
+                <button onClick={() => handleDelete(sickDay._id)} >Yes</button>
                 <button onClick={() => setDeleteForm(false)}>No</button>
             </ReactModal>
 

@@ -9,7 +9,7 @@ const changeStatusOfVacationDay = (status, id) => {
         return VacationDay.findOne({ _id: id })
             .then(vacationDay => {
                 let workingDaysCount = dateUtil.calculateNumberOfWorkingDays(vacationDay.from, vacationDay.to);
-                console.log(User.findById({_id: vacationDay.user}));
+                console.log(vacationDay);
                 return Promise.all(
                     [
                         User.findOneAndUpdate({ _id: vacationDay.user },
@@ -23,13 +23,17 @@ const changeStatusOfVacationDay = (status, id) => {
                             .exec()
                     ])
             })
-            .catch(err => console.log('wut '  + err.message));
+            .catch(err => console.log('wut ' + err.message));
     } else if (status === 'declined') {
         return VacationDay.findOneAndUpdate({ _id: id }, { status: status }, {
             new: true
         })
             .exec();
     }
+}
+
+const changeStatusOfSickDay = (status, id) => {
+
 }
 
 

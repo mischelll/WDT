@@ -20,7 +20,7 @@ const createVacationDay = (vacationDayData, userId) => {
             }
 
             return Promise.all([
-                new VacationDay({ from, to, user: userId }).save()
+                new VacationDay({ from, to, user: userId, missedWorkingDays: workingDaysCount, revenue: user.paymentPerDay * workingDaysCount }).save()
             ]);
         })
         .catch(err => {
@@ -47,7 +47,7 @@ const updateVacationDay = (vacationDayData) => {
 };
 
 const getAllVacationDays = async () => {
-    return await VacationDay.find({}).lean();
+    return await VacationDay.find({}).sort({from:'ascending',to:'ascending'}).lean();
 };
 
 const getVacationDayByUserId = (userId) => {

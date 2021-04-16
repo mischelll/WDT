@@ -30,7 +30,7 @@ const createSickDay = (sickDayData, userId) => {
 };
 
 const getAllSickDays = async () => {
-    return await SickDay.find({}).lean();
+    return await SickDay.find({}).sort({from:'ascending',to:'ascending'}).lean();
 };
 
 const getSickDaysByUserId = (userId) => {

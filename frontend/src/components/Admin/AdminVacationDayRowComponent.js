@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form"
 import { Popup } from '../Popup/Popup';
 import DatePicker from "react-date-picker";
+import Loader from "react-loader-spinner";
 
 export default function VacationDaysRow({ vacationDay }) {
     const [isEditFormVisible, setEditForm] = useState(false);
@@ -13,6 +14,7 @@ export default function VacationDaysRow({ vacationDay }) {
     const { register, handleSubmit, errors } = useForm();
     const [isManageFormVisible, setManageForm] = useState(false);
     const [error, setError] = useState("");
+    const [isLoading, setLoading] = useState(true);
 
     function onEdit(data) {
         console.log(data);
@@ -238,7 +240,7 @@ export default function VacationDaysRow({ vacationDay }) {
                         onChange={date => setendEditDate(date)}
                         minDate={addDays(startEditDate, 1)}
                     />
-                    {startEditDate < endEditDate ? <button>Edit</button> : <button disabled>Edit</button>}
+                    {startEditDate < endEditDate ? <button >Edit</button> : <button disabled>Edit</button>}
                 </form>
             </ReactModal>
 

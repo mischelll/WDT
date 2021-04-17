@@ -7,6 +7,7 @@ import { getSicknDaysByUser } from '../../service/sickDayService';
 import { Popup } from '../Popup/Popup';
 import DatePicker from "react-date-picker";
 import SickDayRow from './SickDayRow';
+import Loader from "react-loader-spinner";
 
 export default function SickDayComponent() {
     const { currentUser } = useContext(UserContext);
@@ -17,12 +18,14 @@ export default function SickDayComponent() {
     const [endDate, setEndDate] = useState(new Date());
     const { register, handleSubmit } = useForm();
     const [error, setError] = useState("");
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         if (currentUser._id) {
             getSicknDaysByUser(currentUser._id)
                 .then(data => {
                     setSickDays(data);
+                    setLoading(false)
                 })
         }
 
@@ -86,6 +89,18 @@ console.log('kj.hkjh');
             backgroundColor: "rgba(0, 0, 0, 0.2)",
         }
     };
+
+    if (isLoading) {
+        return (
+            <Loader
+                type="Puff"
+                color="#00BFFF"
+                height={100}
+                width={100}
+                timeout={5000} //3 secs
+            />
+        )
+    }
 
     return (
         <div>

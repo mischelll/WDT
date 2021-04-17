@@ -6,6 +6,7 @@ import { UserContext } from '../../contexts/UserContext';
 import { getVacationDaysByUser } from '../../service/vacationDayService';
 import DatePicker from "react-date-picker";
 import VacationDayRow from './VacationDaysRow';
+import Loader from "react-loader-spinner";
 
 export default function VacationDay() {
     const { currentUser } = useContext(UserContext);
@@ -15,22 +16,24 @@ export default function VacationDay() {
     const [endDate, setEndDate] = useState(new Date());
     const { handleSubmit } = useForm();
     const [error, setError] = useState("");
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         if (currentUser._id) {
             getVacationDaysByUser(currentUser._id)
                 .then(data => {
-                    if(data.length > 0){
+                    setLoading(true);
+                    if (data?.length > 0) {
                         data.map(x => {
-                            if(x.status === 'declined'){
+                            if (x.status === 'declined') {
                                 x.revenue = 0;
                                 x.missedWorkingDays = 0;
                             }
                             return x;
                         })
+                        setVacationDays(data);
                     }
-                    
-                    setVacationDays(data);
+                    setLoading(false)
                 })
         }
     }, [setVacationDays, currentUser._id]);
@@ -97,7 +100,20 @@ export default function VacationDay() {
         return new Date(date?.getFullYear(), date?.getMonth(), date?.getDate() + daysToAdd)
     }
 
+    if (isLoading) {
+        return (
+            <Loader
+                type="Puff"
+                color="#00BFFF"
+                height={100}
+                width={100}
+                timeout={5000} //3 secs
+            />
+        )
+    }
+
     return (
+
         <div>
             <div className={style.reqButtonContainer}>
                 <button onClick={() => setRequestDayForm(true)} className={style.requestVacaDaysButton}><span>+ Request new vacation period</span></button>

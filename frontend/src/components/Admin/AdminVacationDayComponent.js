@@ -3,20 +3,35 @@ import React, { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { getAllVacationDays } from '../../service/vacationDayService';
 import AdminVacationDayRowComponent from '../Admin/AdminVacationDayRowComponent';
+import Loader from "react-loader-spinner";
 
 export default function VacationDay() {
     const { currentUser } = useContext(UserContext);
     const [vacationDays, setVacationDays] = useState([]);
-
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         if (currentUser._id) {
             getAllVacationDays()
                 .then(data => {
                     setVacationDays(data);
+                    setLoading(false)
                 })
         }
     }, [setVacationDays, currentUser._id]);
+
+
+    if (isLoading) {
+        return (
+            <Loader
+                type="Puff"
+                color="#00BFFF"
+                height={100}
+                width={100}
+                timeout={5000} //3 secs
+            />
+        )
+    }
 
     return (
         <div>
@@ -53,7 +68,7 @@ export default function VacationDay() {
     function mapVacationDays() {
         if (vacationDays.length > 0) {
             return vacationDays.map(vacationDay =>
-                <AdminVacationDayRowComponent vacationDay={vacationDay} />
+                <AdminVacationDayRowComponent vacationDay={vacationDay} spinnerLoading={setLoading}/>
             );
         } else {
             return <h2>No vacation days</h2>

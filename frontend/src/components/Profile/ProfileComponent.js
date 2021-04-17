@@ -33,15 +33,16 @@ export default function ProfileComponent() {
             }
 
             <form>
-                <label className={style.label}>Username: </label>
-                <input className={style.inputField} placeholder={currentUser.username} />
+            <label className={style.label}>Username: </label>
+                <h4>{currentUser.username}</h4>
                 <label className={style.label}>Email: </label>
-                <input className={style.inputField} placeholder={currentUser.email} onChange={handleEmailChange} />
+                <h4>{currentUser.email}</h4>
                 <label className={style.label}>Sick Days available: </label>
                 <h4>{currentUser.annualSickDaysAllowed}</h4>
                 <label className={style.label}>Vacation Days available: </label>
                 <h4>{currentUser.annualVacationDaysAllowed}</h4>
-                <button>Save</button>
+                <label className={style.label}>Payment per day: </label>
+                <h4>{currentUser.paymentPerDay} $</h4>
             </form>
         </div>
     )

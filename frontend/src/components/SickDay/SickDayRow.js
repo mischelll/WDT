@@ -53,6 +53,11 @@ export default function SickDayRow({ sickDay }) {
         setError("");
     }
 
+    function closeDeleteModal(){
+        setDeleteForm(false)
+        setError("");
+    }
+
     function handleDelete(sickDayId) {
         fetch('http://localhost:8082/api/sickDay/' + sickDayId, {
             method: "DELETE",
@@ -70,7 +75,7 @@ export default function SickDayRow({ sickDay }) {
                     console.log(error);
                     console.log(day);
                 } else {
-                    closeModal();
+                    closeDeleteModal();
                 }
             })
             .catch(e => e.message);
@@ -117,7 +122,7 @@ export default function SickDayRow({ sickDay }) {
             <td>{sickDay.to.substring(0, 10)}</td>
             <td>{sickDay.reason}</td>
             <td>{sickDay.status}</td>
-            <td>395 $</td>
+            <td>{sickDay.revenue} $</td>
 
             {function f() {
                 return sickDay.status === 'pending' ?

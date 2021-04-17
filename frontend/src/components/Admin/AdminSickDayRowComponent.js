@@ -75,7 +75,13 @@ export default function AdminSickDayRowComponent({ sickDay }) {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if (Object.hasOwnProperty('error')) {
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                } else {
+                    setEditForm(false)
+                }
             })
             .catch(e => e.message);
     }

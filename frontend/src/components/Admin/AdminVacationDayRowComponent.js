@@ -36,7 +36,14 @@ export default function VacationDaysRow({ vacationDay }) {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if (Object.hasOwnProperty('error')) {
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                } else {
+                    setEditForm(false);
+                    setError("");
+                }
             })
             .catch(e => e.message);
     }
@@ -53,7 +60,14 @@ export default function VacationDaysRow({ vacationDay }) {
         })
             .then(data => data.json())
             .then(day => {
-                console.log(day);
+                if (Object.hasOwnProperty('error')) {
+                    setError(day.error);
+                    console.log(error);
+                    console.log(day);
+                } else {
+                    setDeleteForm(false);
+                    setError("");
+                }
             })
             .catch(e => e.message);
     }

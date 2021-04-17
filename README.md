@@ -19,9 +19,9 @@
 
 
 ### How to run the project
- - CLone this repo
+ - Clone this repo (git clone via HTTP or SSH)
  - Navigate to the cloned repo folder
  - Open each folder (backend, frontend) in separate cmd's or IDE's
- - Run npm install in both directories
- - Run npm start in both directories
+ - Run **npm install** in both directories
+ - Run **npm start** in both directories
 

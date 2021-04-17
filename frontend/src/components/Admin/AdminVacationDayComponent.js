@@ -38,10 +38,10 @@ export default function VacationDay() {
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td>Count of pending periods: {vacationDays.filter(x => x.status === 'pending').length}</td>
-                        <td>Count of approved periods: {vacationDays.filter(x => x.status === 'approved').length} </td>
-                        <td>Count of declined periods: {vacationDays.filter(x => x.status === 'declined').length}</td>
-                        <td>Most requested periods by: {vacationDays.map(x => x.username).sort((a, b) =>
+                        <td>Count of pending periods: {vacationDays?.filter(x => x.status === 'pending').length}</td>
+                        <td>Count of approved periods: {vacationDays?.filter(x => x.status === 'approved').length} </td>
+                        <td>Count of declined periods: {vacationDays?.filter(x => x.status === 'declined').length}</td>
+                        <td>Most requested periods by: {vacationDays?.map(x => x.username).sort((a, b) =>
                             vacationDays.filter(v => v === a).length - vacationDays.filter(v => v === b).length).pop()}
                             </td>
                     </tr>

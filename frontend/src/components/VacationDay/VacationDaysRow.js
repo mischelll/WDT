@@ -82,6 +82,7 @@ export default function VacationDaysRow({ vacationDay, vacationDays }) {
 
     function closeDeleteModal() {
         setDeleteForm(false);
+        setError("");
     }
 
     const customStyles = {

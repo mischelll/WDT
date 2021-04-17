@@ -9,12 +9,7 @@ export default function ProfileComponent() {
 
 
 
-    function handleEmailChange(e) {
-        e.preventDefault()
-        console.log(isAdmin);
-        setEmail(e.target.value)
-    }
-
+    
     if (!isAuthenticated) {
         console.log(currentUser);
         return <Redirect to={"/home"}/>

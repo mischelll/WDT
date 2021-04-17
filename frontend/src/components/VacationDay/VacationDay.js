@@ -20,6 +20,16 @@ export default function VacationDay() {
         if (currentUser._id) {
             getVacationDaysByUser(currentUser._id)
                 .then(data => {
+                    if(data.length > 0){
+                        data.map(x => {
+                            if(x.status === 'declined'){
+                                x.revenue = 0;
+                                x.missedWorkingDays = 0;
+                            }
+                            return x;
+                        })
+                    }
+                    
                     setVacationDays(data);
                 })
         }
